@@ -13,7 +13,7 @@ Brainfuck is an esoteric programming language that works on a theoretical byte t
 [ Start a loop. It will be skipped if the current byte is zero, and if not it will terminate at the following "]" when it is set to zero.
 ] Delimit the end of a loop.
 any other character is considered a "comment" meaning it does nothing.
-These can be combined into a string such as the following "Hello, world!" program:
+These can be combined into a string such as the following "Hello, world!" program (which currently will not work due to the nested loops):
 "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
 
 #How to use:
@@ -24,14 +24,15 @@ For example:
 Run a string of brainfuck code with:
 > (interpret-fuck "[code]")
 For example:
-> (interpret-fuck "+.")
-"SOH"
+> (interpret ".+[.+] Print out all the ascii characters and string refs")
+NULLSOHSTXETXEOTENQACKBELBSHTLFVTFFCRSOSIDLEDC1DC2DC3DC4NAKSYNETBCANEMSUBESCFSGSRSUS !"#$%&'(NIL*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~DELÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµþÞÚÛÙýÝ¯´¬±‗¾¶§÷¸°¨•¹³²■nbsp
+NIL
 SOH is an unprintable ASCII character, which is currently represented using the literal string "SOH".
 Code supports comments too:
 > (interpret-fuck "+. Print a SOH -. reset and print a NULL"
 
 #TODO:
 Fix the following major issues:
- - Loops do not work.
+ - Nested loops do not work. This implementation is not turing complete without them. They will be implemented soon.
  - Some printable characters are represented using literal string references
- - The internal function "one-off-fuck" needs to have a macro used to generate it.
+ - The internal function "one-off-fuck" needs to have a macro used to generate it, it is a mess.
