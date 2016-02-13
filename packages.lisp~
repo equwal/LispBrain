@@ -1,6 +1,0 @@
-(load "interpreter.lisp")
-(defpackage :cl-brainfuck
-  (:use :cl-user)
-  (:export :interpret
-	   :*ascii*
-	   :*operators*))
