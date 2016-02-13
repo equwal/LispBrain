@@ -22,16 +22,15 @@ Run SBCL or another Common Lisp implementation and load the file:
 For example:
 - \> (load "/home/myusername/interpreter.lisp")
 Run a string of brainfuck code with:
-- \> (interpret-fuck "[code]")
+- \> (interpret "[code]")
 For example:
 - \> (interpret ".+[.+] Print out all the ascii characters and string refs")
 NULLSOHSTXETXEOTENQACKBELBSHTLFVTFFCRSOSIDLEDC1DC2DC3DC4NAKSYNETBCANEMSUBESCFSGSRSUS !"#$%&'(NIL*+,-./0123456789:;<=\>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~DELÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµþÞÚÛÙýÝ¯´¬±‗¾¶§÷¸°¨•¹³²■nbsp
 
 NIL
 
-SOH is an unprintable ASCII character, which is currently represented using the literal string "SOH".
-Code supports comments too:
-- \> (interpret-fuck "+. Print a SOH -. reset and print a NULL")
+Some nonprintable ASCII characters such as START OF HEADER are represented with acronyms. See the following example, which also shows the use of a comment in brainfuck code
+- \> (interpret "+. Print a SOH -. reset and print a NULL")
 SOH
 
 NIL
@@ -39,5 +38,5 @@ NIL
 #TODO:
 Fix the following major issues:
  - Nested loops do not work. This implementation is not turing complete without them. They will be implemented soon.
- - Some printable characters are represented using literal string references
+ - Some printable characters are represented using acronyms. Fix that.
  - The internal function "one-off-fuck" needs to have a macro used to generate it, it is a mess.
