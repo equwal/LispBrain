@@ -4,7 +4,7 @@ Has only been tested on SBCL. Any testing information on other systems is much a
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape. The commands are:
-> Move to the next byte right
+\> Move to the next byte right
 < Move to the next byte left
 . Print the current byte using ASCII
 , Read a character of input into this byte
@@ -18,18 +18,18 @@ These can be combined into a string such as the following "Hello, world!" progra
 
 #How to use:
 Run SBCL or another Common Lisp implementation and load the file:
-> (load "[filepath]")
+\> (load "[filepath]")
 For example:
-> (load "/home/myusername/interpreter.lisp")
+\> (load "/home/myusername/interpreter.lisp")
 Run a string of brainfuck code with:
-> (interpret-fuck "[code]")
+\> (interpret-fuck "[code]")
 For example:
-> (interpret ".+[.+] Print out all the ascii characters and string refs")
-NULLSOHSTXETXEOTENQACKBELBSHTLFVTFFCRSOSIDLEDC1DC2DC3DC4NAKSYNETBCANEMSUBESCFSGSRSUS !"#$%&'(NIL*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~DELÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµþÞÚÛÙýÝ¯´¬±‗¾¶§÷¸°¨•¹³²■nbsp
+\> (interpret ".+[.+] Print out all the ascii characters and string refs")
+NULLSOHSTXETXEOTENQACKBELBSHTLFVTFFCRSOSIDLEDC1DC2DC3DC4NAKSYNETBCANEMSUBESCFSGSRSUS !"#$%&'(NIL*+,-./0123456789:;<=\>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~DELÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµþÞÚÛÙýÝ¯´¬±‗¾¶§÷¸°¨•¹³²■nbsp
 NIL
 SOH is an unprintable ASCII character, which is currently represented using the literal string "SOH".
 Code supports comments too:
-> (interpret-fuck "+. Print a SOH -. reset and print a NULL"
+\> (interpret-fuck "+. Print a SOH -. reset and print a NULL"
 
 #TODO:
 Fix the following major issues:
