@@ -12,6 +12,7 @@
 (defvar *brainfuck* ""
   "Place to store brainfuck code input string globally")
 
+(define-condition open-loop-at-zero () ())
 (defparameter *operators*
   '((#\+ . +)
     (#\- . -)
@@ -283,6 +284,9 @@
 (defvar *pointer* (pointer-default)
   "The pointer location for the tape. Starts near the middle.")
 
+(defmacro byte-value ()
+  `(elt *tape* *pointer*))
+
 (defun remove-first (string)
   (if (= 1 (length string))
       ""
@@ -307,9 +311,6 @@
   "Reads the first operator from a list of operators and returns it."
   (cdr (assoc brainfuck-char *operators*)))
 
-(defmacro byte-value ()
-  (list 'elt '*tape* '*pointer*))
-
 (defun first-elt (string)
   (elt string 0))
 (defun ascii-to-integer (char)
@@ -318,10 +319,28 @@
 (defun integer-to-ascii (integer)
   (cdr (assoc integer *ascii*)))
 
-(defun position-last-open-bracket (string start-position)
+#|(defun position-last-open-bracket (string start-position)
   "Find the matching bracket for this loop. It NEEDS TO LEARN ABOUT NESTING"
-  (position #\[ (subseq string 0 start-position) :from-end t))
-
+  (position #\[ (subseq string 0 start-position) :from-end t))|#
+(defun position-last-open-bracket-aux (current-position
+				       depth)
+  (let ((this (elt *brainfuck* current-position)))
+    (if (char= #\[ this)
+	(if (= 1 depth)
+	    current-position
+	    (if (> depth 1)
+		(position-last-open-bracket-aux (1- current-position)
+						(1- depth))
+		(position-last-open-bracket-aux (1- current-position)
+						0)))
+	(if (char= #\] this)
+	    (position-last-open-bracket-aux (1- current-position)
+					    (1+ depth))
+	    (position-last-open-bracket-aux (1- current-position)
+					    depth)))))
+(defun position-last-open-bracket (position)
+  "Work backwards and find the matching open bracket."
+  (position-last-open-bracket-aux position 0))
 (defun right-shift ()
   "Move to the next byte to the \"right\""
   (setf *pointer* (1+ *pointer*)))
@@ -342,45 +361,67 @@ unprintable character mishaps."
 	  ((string-equal string-length-one this) (car (car ascii)))
 	  (t (ascii-to-integer-aux string-length-one (cdr ascii))))))
 
+(defun print-this-byte ()
+  (format t "~a" (integer-to-ascii (byte-value))))
+
+(defun read-this-byte ()
+  (setf (byte-value)
+	(ascii-to-integer (read-char))))
+
 (defun one-off-fuck (brainfuck-char position)
   "Run a single first brainfuck-char."
-  (let ((symbolified (convert-fuck-char brainfuck-char)))
-    (cond ((equalp symbolified
-		   (convert-fuck-char #\,)) (setf (elt *tape* *pointer*)
-						  (ascii-to-integer (read-char))))
-	  ((equalp symbolified
-		   (convert-fuck-char #\.)) (format t "~a" (integer-to-ascii (byte-value))))
-	  ((equalp symbolified
-		   '+) (incf-byte))
-	  ((equalp symbolified
-		   '-) (decf-byte))
-	  ((equalp symbolified
-		   ']) (if (/= 0 (byte-value))
-			   (let ((new-pos (1+ (position-last-open-bracket *brainfuck* position))))
-			     (interpret-fuck-aux (subseq *brainfuck* new-pos) new-pos))
-			   ()))
-	  ((equalp symbolified
-		   '>) (right-shift))
-	  ((equalp symbolified
-		   '<) (left-shift)))))
+  (case brainfuck-char
+    (#\, (read-this-byte))
+    (#\. (print-this-byte))
+    (#\+ (incf-byte))
+    (#\- (decf-byte))
+    (#\] (if (/= 0 (byte-value))
+	     (interpret-fuck-aux  (position-last-open-bracket
+				   position))))
+    (#\[ (if (= 0 (byte-value))
+	     (error 'open-loop-at-zero)))
+    (#\> (right-shift))
+    (#\< (left-shift))))
+(defun skip-loop-aux (position depth)
+  (let ((this (elt *brainfuck* position)))
+    (if (char= #\[ this)
+	(skip-loop-aux (1+ position) (1+ depth))
+	(if (char= #\] this)
+	    (if (= 1 depth)
+		(1+ position)
+		(skip-loop-aux (1+ position) (1- depth)))))))
+(defun skip-loop (position)
+  (skip-loop-aux position 0))
+(defun interpret-fuck-aux (position)
+  "Recursive auxillary function for interpret"
+  (let ((flag-looped nil))
+    (if (> (length *brainfuck*) position)
+	(progn (handler-case (one-off-fuck (elt *brainfuck* position) position)
+		 (open-loop-at-zero () (progn (setf flag-looped t)
+					      (interpret-fuck-aux (skip-loop position)))))
+	       (if (equalp flag-looped nil)
+		   (interpret-fuck-aux (1+ position)))))))
 
-(defun interpret-fuck-aux (brainfuck-string position)
+;;Did too much stuff
+#|(defun interpret-fuck-aux (brainfuck-string position)
   "Recursive auxillary function for interpret"
   (let ((string-length (length brainfuck-string)))
-    (if (> string-length 1)
-	(progn
-	  (one-off-fuck (first-elt brainfuck-string) (1+ position))
-	  (interpret-fuck-aux (remove-first brainfuck-string)
-				   (1+ position)))
-	(if (= string-length 1)
-	    (one-off-fuck (first-elt brainfuck-string) (1+ position))
-	    (if (= string-length 0)
-		nil)))))
+    (if (>= string-length position)
+	(if (> string-length 1) 
+	    (progn
+	      (one-off-fuck (first-elt brainfuck-string)
+			    position)
+	      (interpret-fuck-aux (remove-first brainfuck-string)
+				  (1+ position)))
+	    (if (= string-length 1)
+		(one-off-fuck (first-elt brainfuck-string) position)
+		(if (= string-length 0)
+		    nil))))))|#
 
 (defun interpret (brainfuck-string)
   "Interpret the brainfuck"
   (setf *tape* (make-tape-array))	  ;Don't use this dynamic variable either
   (setf *brainfuck* brainfuck-string)
   (setf *pointer* (pointer-default))
-  (interpret-fuck-aux brainfuck-string 0)
+  (interpret-fuck-aux 0)
   nil)
