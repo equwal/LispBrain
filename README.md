@@ -4,14 +4,14 @@ Has only been tested on SBCL. Any testing information on other systems is much a
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape. The commands are:
-\> Move to the next byte right
-< Move to the next byte left
-. Print the current byte using ASCII
-, Read a character of input into this byte
-+ Increment this byte's value by one
-- Decrement this byte's value by one (that is, subtract one from this byte and set the byte to it)
-[ Start a loop. It will be skipped if the current byte is zero, and if not it will terminate at the following "]" when it is set to zero.
-] Delimit the end of a loop.
+- \> Move to the next byte right
+- < Move to the next byte left
+- . Print the current byte using ASCII
+- , Read a character of input into this byte
+- + Increment this byte's value by one
+- - Decrement this byte's value by one (that is, subtract one from this byte and set the byte to it)
+- [ Start a loop. It will be skipped if the current byte is zero, and if not it will terminate at the following "]" when it is set to zero.
+- ] Delimit the end of a loop.
 any other character is considered a "comment" meaning it does nothing.
 These can be combined into a string such as the following "Hello, world!" program (which currently will not work due to the nested loops):
 "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
