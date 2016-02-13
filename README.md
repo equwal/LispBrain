@@ -13,7 +13,7 @@ Brainfuck is an esoteric programming language that works on a theoretical byte t
 - [ Start a loop. It will be skipped if the current byte is zero, and if not it will terminate at the following "]" when it is set to zero.
 - ] Delimit the end of a loop.
 any other character is considered a "comment" meaning it does nothing.
-These can be combined into a string such as the following "Hello, world!" program (which currently will not work due to the nested loops):
+These can be combined into a string such as the following "Hello, world!" program (which currently will not work due to the nested loops implementation bug):
 "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
 
 #How to use:
