@@ -30,7 +30,6 @@ NIL
 
 Some nonprintable ASCII characters such as START OF HEADER are represented with acronyms. See the following example, which also shows the use of a comment in brainfuck code
 - \> (interpret "+. Print a SOH -. reset and print a NULL")
-- 
 SOH
 
 NIL
