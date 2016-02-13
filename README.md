@@ -30,7 +30,10 @@ NULLSOHSTXETXEOTENQACKBELBSHTLFVTFFCRSOSIDLEDC1DC2DC3DC4NAKSYNETBCANEMSUBESCFSGS
 NIL
 SOH is an unprintable ASCII character, which is currently represented using the literal string "SOH".
 Code supports comments too:
-- \> (interpret-fuck "+. Print a SOH -. reset and print a NULL"
+- \> (interpret-fuck "+. Print a SOH -. reset and print a NULL")
+SOH
+
+NIL
 
 #TODO:
 Fix the following major issues:
