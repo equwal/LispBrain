@@ -1,6 +1,10 @@
 # Lisp Fuck
+<<<<<<< HEAD
 A brainfuck interpreter written in Common Lisp.
 Has only been tested on SBCL on Linux. Any testing information on other systems is much appreciated.
+=======
+Lisp Fuck is a simple brainfuck interpreter written in Common Lisp. It has only been tested on SBCL. Any testing information on other systems is much appreciated.
+>>>>>>> c2a4c4394b2bb4d7ee089e5124bb559f6f7212c2
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape. The commands are:
@@ -46,7 +50,14 @@ NIL
 #TODO:
 Fix the following major issues:
  - Some printable characters are represented using acronyms. Just print them instead.
+<<<<<<< HEAD
  Minor issues:
  - The packaging system requires a lot of effort on the part of the user. Use ASDF instead.
 
 Recommendations are welcome.
+=======
+
+Minor issues:
+ - Doesn't use a packaging system. Names might interfere with other packages or user-defined names.
+ - Each byte is stored using the "integer" datatype and abstracted into a byte using accessor functions. It would be faster and use less space if it only took up one byte of space per theoritical byte.
+>>>>>>> c2a4c4394b2bb4d7ee089e5124bb559f6f7212c2
