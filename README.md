@@ -33,10 +33,6 @@ Use the cl-brainfuck package to get access to the public API
 
 - \> (use-package :cl-brainfuck)
 
-Execute some brainfuck with the interpret function:
-
-- \> (interpret "This is some brainfuck code: +++++++++++++++++++++++++++++++++++++[->+>+<<]>.>.")
-
 Run a string of brainfuck code with:
 
 - \> (interpret "[code]")
