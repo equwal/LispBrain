@@ -319,9 +319,6 @@
 (defun integer-to-ascii (integer)
   (cdr (assoc integer *ascii*)))
 
-#|(defun position-last-open-bracket (string start-position)
-  "Find the matching bracket for this loop. It NEEDS TO LEARN ABOUT NESTING"
-  (position #\[ (subseq string 0 start-position) :from-end t))|#
 (defun position-last-open-bracket-aux (current-position
 				       depth)
   (let ((this (elt *brainfuck* current-position)))
@@ -402,21 +399,6 @@ unprintable character mishaps."
 	       (if (equalp flag-looped nil)
 		   (interpret-fuck-aux (1+ position)))))))
 
-;;Did too much stuff
-#|(defun interpret-fuck-aux (brainfuck-string position)
-  "Recursive auxillary function for interpret"
-  (let ((string-length (length brainfuck-string)))
-    (if (>= string-length position)
-	(if (> string-length 1) 
-	    (progn
-	      (one-off-fuck (first-elt brainfuck-string)
-			    position)
-	      (interpret-fuck-aux (remove-first brainfuck-string)
-				  (1+ position)))
-	    (if (= string-length 1)
-		(one-off-fuck (first-elt brainfuck-string) position)
-		(if (= string-length 0)
-		    nil))))))|#
 
 (defun interpret (brainfuck-string)
   "Interpret the brainfuck"
