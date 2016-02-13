@@ -1,6 +1,5 @@
 # Lisp Fuck
-A brainfuck interpreter written in Common Lisp.
-Has only been tested on SBCL. Any testing information on other systems is much appreciated.
+Lisp Fuck is a brainfuck interpreter written in Common Lisp. It Has only been tested on SBCL. Any testing information on other systems is much appreciated.
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape. The commands are:
