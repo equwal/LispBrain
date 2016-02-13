@@ -12,7 +12,7 @@ Brainfuck is an esoteric programming language that works on a theoretical byte t
 - - Decrement this byte's value by one (that is, subtract one from this byte and set the byte to it)
 - [ Start a loop. It will be skipped if the current byte is zero, and if not it will terminate at the following "]" when it is set to zero.
 - ] Delimit the end of a loop. Any other character is considered a "comment" meaning it does nothing.
-These can be combined into a string such as the following "Hello, world!" program (which currently will not work due to the nested loops stack overflow issue):
+These can be combined into a string such as the following "Hello, world!" program:
 "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
 
 #How to use:
@@ -37,5 +37,6 @@ NIL
 
 #TODO:
 Fix the following major issues:
- - Small numbers of nested loops overflow the stack, mostly due the the function interpret-fuck-aux, which is not tail recursive. This should be the first priority.
  - Some printable characters are represented using acronyms. Just print them instead.
+Minor issues:
+ - Doesn't use a packaging system. Names might interfere with other packages or user-defined names.
