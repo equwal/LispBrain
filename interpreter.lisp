@@ -283,8 +283,6 @@
 (defvar *pointer* (pointer-default)
   "The pointer location for the tape. Starts near the middle.")
 
-(defvar *input* "" "The user input is saved here should they have any.")
-
 (defun remove-first (string)
   (if (= 1 (length string))
       ""
@@ -381,8 +379,6 @@ unprintable character mishaps."
 
 (defun interpret (brainfuck-string)
   "Interpret the brainfuck"
-  ;; This *input* problem is best solved using multiple-values-bind to bind both the starting char and the rest of the string
-  (setf *input* "")	  ;TODO: Don't use a dynamic variable for this
   (setf *tape* (make-tape-array))	  ;Don't use this dynamic variable either
   (setf *brainfuck* brainfuck-string)
   (setf *pointer* (pointer-default))
