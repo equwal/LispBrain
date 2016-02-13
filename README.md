@@ -71,9 +71,11 @@ Fix the following major issues:
  - The packaging system requires a lot of effort on the part of the user. Use ASDF instead.
 
 Recommendations are welcome.
-=======
 
 Minor issues:
 
  - Doesn't use a packaging system. Names might interfere with other packages or user-defined names.
  - Each byte is stored using the "integer" datatype and abstracted into a byte using accessor functions. It would be faster and use less space if it only took up one byte of space per theoritical byte.
+ 
+This software is licensed under the MIT free license.
+===============
