@@ -58,16 +58,11 @@ NIL
 Fix the following major issues:
 
  - Some printable characters are represented using acronyms. Just print them instead.
- 
- Minor issues:
- 
- - The packaging system requires a lot of effort on the part of the user. Use ASDF instead.
-
-Recommendations are welcome.
 
 Minor issues:
 
  - Each byte is stored using the "integer" datatype and abstracted into a byte using accessor functions. It would be faster and use less space if it only took up one byte of space per theoritical byte.
+ - ASDF would be a better packaging system choice than the current arrangement.
  
-This software is licensed under the MIT free license.
+This software is licensed under the MIT free software license.
 ===============
