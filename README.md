@@ -30,11 +30,12 @@ NIL
 
 Some nonprintable ASCII characters such as START OF HEADER are represented with acronyms. See the following example, which also shows the use of a comment in brainfuck code
 - \> (interpret "+. Print a SOH -. reset and print a NULL")
+- 
 SOH
 
 NIL
 
 #TODO:
 Fix the following major issues:
- - Small numbers of nested loops overflow the stack, probably due to overuse of recursion. This should be the first priority.
+ - Small numbers of nested loops overflow the stack, mostly due the the function interpret-fuck-aux, which is not tail recursive. This should be the first priority.
  - Some printable characters are represented using acronyms. Just print them instead.
