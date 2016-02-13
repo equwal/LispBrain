@@ -11,9 +11,8 @@ Brainfuck is an esoteric programming language that works on a theoretical byte t
 - + Increment this byte's value by one
 - - Decrement this byte's value by one (that is, subtract one from this byte and set the byte to it)
 - [ Start a loop. It will be skipped if the current byte is zero, and if not it will terminate at the following "]" when it is set to zero.
-- ] Delimit the end of a loop.
-any other character is considered a "comment" meaning it does nothing.
-These can be combined into a string such as the following "Hello, world!" program (which currently will not work due to the nested loops implementation bug):
+- ] Delimit the end of a loop. Any other character is considered a "comment" meaning it does nothing.
+These can be combined into a string such as the following "Hello, world!" program (which currently will not work due to the nested loops stack overflow issue):
 "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
 
 #How to use:
@@ -37,6 +36,5 @@ NIL
 
 #TODO:
 Fix the following major issues:
- - Nested loops do not work. This implementation is not turing complete without them. They will be implemented soon.
- - Some printable characters are represented using acronyms. Fix that.
- - The internal function "one-off-fuck" needs to have a macro used to generate it, it is a mess.
+ - Small numbers of nested loops overflow the stack, probably due to overuse of recursion. This should be the first priority.
+ - Some printable characters are represented using acronyms. Just print them instead.
