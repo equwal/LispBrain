@@ -150,6 +150,7 @@
 	  (open-loop-at-zero () (setf position
 				      (1- (skip-loop position)))))
      do (setf position (1+ position))))
+
 (defun interpret (brainfuck-string)
   "Interpret the brainfuck"
   (reset-globals)
