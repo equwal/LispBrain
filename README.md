@@ -55,3 +55,7 @@ Finally, there is a slightly more profane alias for the `interpret` function:
 - Test on other implementations and operating systems.
 This software is licensed under the MIT free software license.
 ===============
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/equwal/lispfuck/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
