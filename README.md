@@ -15,9 +15,11 @@ Brainfuck is an esoteric programming language that works on a theoretical byte t
 Any other character is considered a "comment" meaning it does nothing.
 ```
 
-These can be combined into a string such as the following "Hello, world!" program:
+These can be combined into a string such as the following "Hello World!#\Newline" program:
 ```
-(interpret "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+> (interpret "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+"Hello World!
+"
 ```
 #How to use:
 Run SBCL or another Common Lisp implementation and load the packages file:
@@ -40,15 +42,20 @@ Run a string of brainfuck code with:
 ```
 > (interpret "[code]")
 ```
-Another example:
+For example:
 ```
 > (interpret ".+[.+] Print out all the ascii characters")
 
-�	
+"�	
 
- !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ
+ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
+```
+Take note that the `interpret` command returns a string, which allows the brainfuck to be used within other lisp code.
 
-NIL ;note that NIL will always be returned by (interpret). The above text is written to *standard-output*
+Finally, there is a slightly more profane alias for the `interpret` function:
+```
+> (fuck "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.F+++++++++++++++.U------------------.C++++++++.K")
+"FUCK"
 ```
 #TODO:
  - ASDF would be a better packaging system choice than the current arrangement.

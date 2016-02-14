@@ -17,8 +17,9 @@
 (defparameter *tape-size-default* 30000
   "The size of the tape, in bytes, used to store each byte")
 
-(defparameter *maximum-brainfuck-string-chars* 1000000
-  "The maximum characters allowed in the brainfuck code string")
+(defvar *output* ""
+  "Defaults to an empty string because it is setf'd by other functions")
+
 
 (defun make-tape-array ()
   "Creates a new tape array"
@@ -28,9 +29,7 @@
 (defvar *tape* (make-tape-array)
   "The tape array used to store each byte")
 
-(defun brainfuck-string ()
-  (make-string *maximum-brainfuck-string-chars*))
-(defvar *brainfuck* (brainfuck-string)
+(defvar *brainfuck* ""
   "Place to store brainfuck code input string globally")
 
 ;; Conditions for looping 
@@ -45,8 +44,9 @@
 
 (defun reset-globals ()
   (setf *tape* (make-tape-array))
-  (setf *brainfuck* (brainfuck-string))
-  (setf *pointer* (pointer-default)))
+  (setf *brainfuck* "")
+  (setf *pointer* (pointer-default))
+  (setf *output* ""))
 
 (defmacro byte-value ()
   `(elt *tape* *pointer*))
@@ -63,6 +63,7 @@
   `(if (= (byte-value) ,bound)
       (setf (byte-value) ,bound-next)
       (,operation (byte-value))))
+
 (defun incf-byte ()
   "Increment a byte, and wrap to 0 if 255 is incremented"
   (crement-if incf 255 0))
@@ -109,7 +110,9 @@
   (setf *pointer* (1- *pointer*)))
 
 (defun print-this-byte ()
-  (format t "~a" (integer-to-ascii (byte-value))))
+  (setf *output* (concatenate 'string
+			      *output*
+			      (vector (integer-to-ascii (byte-value))))))
 
 (defun read-this-byte ()
   (setf (byte-value)
@@ -156,4 +159,8 @@
   (reset-globals)
   (setf *brainfuck* brainfuck-string)
   (interpret-fuck-aux 0)
-  nil)
+  *output*)
+
+(defun fuck (brainfuck-string)
+  "An alias for the interpret function"
+  (interpret brainfuck-string))
