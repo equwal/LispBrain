@@ -22,23 +22,17 @@ These can be combined into a string such as the following "Hello World!#\Newline
 "
 ```
 #How to use:
-Run SBCL or another Common Lisp implementation and load the packages file:
+Store this project's code in the common-lisp directory under your home directory. Then it may be loaded like this:
 ```
-> (load "[filepath]")
+> (asdf:load-system "lispfuck")
 ```
-For example:
-```
-> (load "/home/myusername/brainfuck/packages.lisp")
-```
-Load up the "interpreter.lisp" file, which contains all of the code
-```
-> (load "/home/your_username/your_file_path/interpreter.lisp)
-```
-**Use** the cl-brainfuck package to get access to the public API
+The external functions need to be **used**, so execute this command.
 ```
 > (use-package :cl-brainfuck)
 ```
-Run a string of brainfuck code with:
+Your brainfuck interpreter is now loaded!
+
+You can run a string of brainfuck code with:
 ```
 > (interpret "[code]")
 ```
@@ -58,7 +52,6 @@ Finally, there is a slightly more profane alias for the `interpret` function:
 "FUCK"
 ```
 #TODO:
- - ASDF would be a better packaging system choice than the current arrangement.
- 
+- Test on other implementations and operating systems.
 This software is licensed under the MIT free software license.
 ===============
