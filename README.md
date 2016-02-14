@@ -32,7 +32,7 @@ Load up the "interpreter.lisp" file, which contains all of the code
 ```
 > (load "/home/your_username/your_file_path/interpreter.lisp)
 ```
-Use the cl-brainfuck package to get access to the public API
+**Use** the cl-brainfuck package to get access to the public API
 ```
 > (use-package :cl-brainfuck)
 ```
