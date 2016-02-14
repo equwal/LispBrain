@@ -40,9 +40,9 @@ Run a string of brainfuck code with:
 ```
 > (interpret "[code]")
 ```
-For example:
+Another example:
 ```
-> (interpret ".+[.+] Print out all the ascii characters and string refs")
+> (interpret ".+[.+] Print out all the ascii characters")
 
 �	
 
