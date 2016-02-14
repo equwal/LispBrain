@@ -8,34 +8,36 @@
 (defparameter *tape-size-default* 30000
   "The size of the tape, in bytes, used to store each byte")
 
+(defparameter *maximum-brainfuck-string-chars* 1000000
+  "The maximum characters allowed in the brainfuck code string")
+
 (defun make-tape-array ()
+  "Creates a new tape array"
   (make-array *tape-size-default*
 	      :element-type '(unsigned-byte 8)
 	      :initial-element 0))
-
 (defvar *tape* (make-tape-array)
   "The tape array used to store each byte")
 
-(defvar *brainfuck* ""
+(defun brainfuck-string ()
+  (make-string *maximum-brainfuck-string-chars*))
+(defvar *brainfuck* (brainfuck-string)
   "Place to store brainfuck code input string globally")
 
+;; Conditions for looping 
 (define-condition open-loop-at-zero (condition) ())
 (define-condition end-of-loop (condition) ())
 
-(defparameter *operators*
-  '((#\+ . +)
-    (#\- . -)
-    (#\, . comma)
-    (#\. . period)
-    (#\[ . [)
-    (#\] . ])
-    (#\< . <)
-    (#\> . >)))
-
-(defun pointer-default () (floor (/ *tape-size-default* 2)))
-
+(defun pointer-default ()
+  "Get the value to  set the pointer back to."
+  (floor (/ *tape-size-default* 2)))
 (defvar *pointer* (pointer-default)
   "The pointer location for the tape. Starts near the middle.")
+
+(defun reset-globals ()
+  (setf *tape* (make-tape-array))
+  (setf *brainfuck* (brainfuck-string))
+  (setf *pointer* (pointer-default)))
 
 (defmacro byte-value ()
   `(elt *tape* *pointer*))
@@ -139,11 +141,9 @@
 	  (open-loop-at-zero () (setf position
 				      (1- (skip-loop position)))))
      do (setf position (1+ position))))
-
 (defun interpret (brainfuck-string)
   "Interpret the brainfuck"
-  (setf *tape* (make-tape-array))	  ;Don't use this dynamic variable either
+  (reset-globals)
   (setf *brainfuck* brainfuck-string)
-  (setf *pointer* (pointer-default))
   (interpret-fuck-aux 0)
   nil)
