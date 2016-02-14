@@ -16,9 +16,9 @@ Any other character is considered a "comment" meaning it does nothing.
 ```
 
 These can be combined into a string such as the following "Hello, world!" program:
-
-"++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
-
+```
+(interpret "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+```
 #How to use:
 Run SBCL or another Common Lisp implementation and load the packages file:
 ```
