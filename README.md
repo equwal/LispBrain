@@ -29,10 +29,10 @@ Store this project's code in the common-lisp directory under your home directory
 ```
 > (asdf:load-system "brain")
 ```
-The external functions need to be **used**, so execute this command.
+The external functions are easier to use when they have been *used*, so execute this command.
 ```
-> (use-package :cl-brainfuck)
-or alternatively the brainfuck functions may be called using the brain:function notation:
+> (use-package :brain)
+or alternatively the brainfuck functions may be called using the brain:[function] notation, without being used:
 > (brain:fuck "[Put your code in the string]")
 ```
 Your brainfuck interpreter is now loaded!
@@ -60,14 +60,20 @@ Finally, there is a slightly more profane alias for the `interpret` function:
 ```
 Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc., but require the user to understand how the internal code works. For this reason there is no tutorial on how to properly debug your brainfuck code, just a couple examples. The user is encouraged to read the Common Lisp source code to get all the features of the Lisp debugging environment in their brainfuck.
 
-Suppose you want to make the tape only 10 bytes long:
+To debug your brainfuck code you should start with:
+```
+> (in-package :brain)
+```
+to get access to the internal functions.
+
+Suppose you want to make the tape only 10 bytes long (instead of the default 30000):
 ```
 > (in-package :brain)
 > (setf *tape-size-default* 10) ;Sets the tape to only elements 0 to 9
 > (reset-globals) ;Resets the tape, pointer, and a few other things
-> *tape-size-default* ;This is the variable that was just set
-10
-> *pointer* ;This shows that the pointer gets moved to the middle also
+> *tape* ;Holds the byte tape vector
+#(0 0 0 0 0 0 0 0 0 0)
+> *pointer* ;This shows that the pointer gets moved to the middle regardless of the size
 5
 ```
 Suppose you want to find information about the + and - operations:
@@ -83,6 +89,7 @@ Suppose you want to find information about the + and - operations:
 ```
 #TODO:
 - Test on other implementations and operating systems.
+- Make debugging more user friendly.
 
 This software is licensed under the MIT free software license.
 ====
