@@ -1,5 +1,5 @@
 # Lisp Fuck
-Lisp Fuck is a simple brainfuck interpreter written in Common Lisp. It has only been tested on SBCL. Any testing information on other systems is much appreciated.
+Lisp Fuck is a simple brainfuck interpreter written in Common Lisp.
 
 #Why Is That Necessary?
 This provides the ability to debug your brainfuck code using Common Lisp's rich debugging environment, or integrate brainfuck into your lisp code should that be interesting to you. There are plenty of brainfuck interpreters out there, none of which work from within common lisp.
@@ -88,9 +88,9 @@ Suppose you want to find information about the + and - operations:
 ""
 ```
 #TODO:
-- Test on other implementations and operating systems (CCL, ECL, ABCL, CLISP, AllegroCL, LispWorks).
+- Test on other implementations and operating systems (CCL, ECL, ABCL, CLISP, AllegroCL, LispWorks), to verify that it works.
 - Make debugging more user friendly.
-- `#F` reader macro (Ex: `#F.+[.+]` instead of `(brain:fuck ".+[.+]")`
+- `#F` reader macro (Ex: `#F.+[.+]` instead of `(fuck ".+[.+]")`
 
 This software is licensed under the MIT free software license.
 ====
