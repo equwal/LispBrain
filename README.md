@@ -18,7 +18,7 @@ Brainfuck is an esoteric programming language that works on a theoretical byte t
 Any other character is considered a "comment" meaning it does nothing.
 ```
 
-These can be combined into a string such as the following "Hello World!#\Newline" program:
+These can be combined into a string such as the following "Hello World!" program:
 ```
 > (interpret "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
 "Hello World!
@@ -83,8 +83,9 @@ Suppose you want to find information about the + and - operations:
 ```
 #TODO:
 - Test on other implementations and operating systems.
+
 This software is licensed under the MIT free software license.
-===============
+====
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/equwal/lispfuck/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
