@@ -9,7 +9,7 @@
 (in-package :cl-brainfuck-system)
 
 (defsystem brain
-  :name "lispfuck"
+  :name "brain"
   :author "Spenser Max Truex"
   :version "1.0"
   :maintainer "Spenser Truex <spensertruexonline@gmail.com>"
