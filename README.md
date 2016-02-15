@@ -27,7 +27,7 @@ These can be combined into a string such as the following "Hello World!" program
 #How to use:
 Store this project's code in the ASDF load directory; [ASDF](https://common-lisp.net/project/asdf/) must be installed. Then it may be loaded like this:
 ```
-> (asdf:load-system "brain")
+> (asdf:load-system :brain)
 ```
 The external functions are easier to use when they have been *used*, so execute this command.
 ```
