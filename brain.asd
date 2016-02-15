@@ -8,7 +8,7 @@
 (defpackage :cl-brainfuck-system (:use :asdf :cl))
 (in-package :cl-brainfuck-system)
 
-(defsystem lispfuck
+(defsystem brain
   :name "lispfuck"
   :author "Spenser Max Truex"
   :version "1.0"

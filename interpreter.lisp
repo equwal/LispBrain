@@ -13,7 +13,7 @@
 ;;;; OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
 ;;;; OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THIS BRAINFUCK SOFTWARE OR THE USE OR OTHER DEALINGS IN THIS 
 ;;;; BRAINFUCK SOFTWARE.
-(in-package :cl-brainfuck)
+(in-package :brain)
 (defparameter *tape-size-default* 30000
   "The size of the tape, in bytes, used to store each byte")
 
@@ -39,6 +39,7 @@
 (defun pointer-default ()
   "Get the value to  set the pointer back to."
   (floor (/ *tape-size-default* 2)))
+
 (defvar *pointer* (pointer-default)
   "The pointer location for the tape. Starts near the middle.")
 
@@ -48,8 +49,11 @@
   (setf *pointer* (pointer-default))
   (setf *output* ""))
 
+(defun wrap-pointer ()
+  (cond ((= *pointer* *tape-size-default*) (setf *pointer* 0))
+		((= *pointer* -1) (setf *pointer* (1- *tape-size-default*)))))
 (defmacro byte-value ()
-  `(elt *tape* *pointer*))
+  `(aref *tape* *pointer*))
 
 (defun remove-first (string)
   (if (= 1 (length string))
@@ -75,10 +79,10 @@
 (defun first-elt (string)
   (elt string 0))
 
-(defun ascii-to-integer (char)
+(defun ascii->integer (char)
   (char-code char))
 
-(defun integer-to-ascii (num)
+(defun integer->ascii (num)
   (code-char num))
 
 (defun goto-aux (current-position
@@ -102,21 +106,23 @@
   (goto-aux position 0))
 
 (defun right-shift ()
-  "Move to the next byte to the \"right\""
-  (setf *pointer* (1+ *pointer*)))
+  "Move to the next byte to the 'right'"
+  (incf *pointer*)
+  (wrap-pointer))
 
 (defun left-shift ()
-  "Move to the next byte to the \"left\""
-  (setf *pointer* (1- *pointer*)))
+  "Move to the next byte to the 'left'"
+  (decf *pointer*)
+  (wrap-pointer))
 
 (defun print-this-byte ()
   (setf *output* (concatenate 'string
 			      *output*
-			      (vector (integer-to-ascii (byte-value))))))
+			      (vector (integer->ascii (byte-value))))))
 
 (defun read-this-byte ()
   (setf (byte-value)
-	(ascii-to-integer (read-char))))
+	(ascii->integer (read-char))))
 
 (defun one-off-fuck (position)
   "Run a single first brainfuck-char."
@@ -132,7 +138,7 @@
     (#\< (left-shift))))
 
 (defun skip-loop-aux (position depth)
-  (let ((this (elt *brainfuck* position)))
+  (let ((this (char *brainfuck* position)))
     (if (char= #\[ this)
 	(skip-loop-aux (1+ position) (1+ depth))
 	(if (char= #\] this)
@@ -144,23 +150,21 @@
 (defun skip-loop (position)
   (skip-loop-aux position 0))
 
-(defun interpret-fuck-aux (position)
-  (loop
-     until (= (length *brainfuck*) position)
-     do (handler-case (one-off-fuck position)
-	  (end-of-loop () (setf position
-				(1- (goto position))))
-	  (open-loop-at-zero () (setf position
-				      (1- (skip-loop position)))))
-     do (setf position (1+ position))))
-
 (defun interpret (brainfuck-string)
   "Interpret the brainfuck"
   (reset-globals)
   (setf *brainfuck* brainfuck-string)
-  (interpret-fuck-aux 0)
+  ;; Loop over each character in the string
+  (loop for position to (1- (length *brainfuck*))
+     do (handler-case (one-off-fuck position)
+	  ;; Handles looping with the condition system
+	  (end-of-loop () (setf position
+				(1- (goto position))))
+	  (open-loop-at-zero () (setf position
+				      (1- (skip-loop position))))))
   *output*)
 
 (defun fuck (brainfuck-string)
   "An alias for the interpret function"
   (interpret brainfuck-string))
+
