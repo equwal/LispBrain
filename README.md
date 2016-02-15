@@ -25,7 +25,7 @@ These can be combined into a string such as the following "Hello World!" program
 "
 ```
 #How to use:
-Store this project's code in the ASDF load directory; [ASDF][https://common-lisp.net/project/asdf/] must be installed. Then it may be loaded like this:
+Store this project's code in the ASDF load directory; [ASDF](https://common-lisp.net/project/asdf/) must be installed. Then it may be loaded like this:
 ```
 > (asdf:load-system "brain")
 ```
