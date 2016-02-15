@@ -88,7 +88,7 @@ Suppose you want to find information about the + and - operations:
 ""
 ```
 #TODO:
-- Test on other implementations and operating systems.
+- Test on other implementations and operating systems (CCL, ECL, ABCL, CLISP, AllegroCL, LispWorks).
 - Make debugging more user friendly.
 
 This software is licensed under the MIT free software license.
