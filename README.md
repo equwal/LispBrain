@@ -2,7 +2,7 @@
 Lisp Fuck is a simple brainfuck interpreter written in Common Lisp. It has only been tested on SBCL. Any testing information on other systems is much appreciated.
 
 #Why Is That Necessary?
-This provides the ability to debug your brainfuck code using common lisp's rich debugging environment, or integrate brainfuck into your lisp code should that be interesting to you.
+This provides the ability to debug your brainfuck code using Common Lisp's rich debugging environment, or integrate brainfuck into your lisp code should that be interesting to you.
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape. The commands are:
