@@ -2,7 +2,7 @@
 Lisp Fuck is a simple brainfuck interpreter written in Common Lisp. It has only been tested on SBCL. Any testing information on other systems is much appreciated.
 
 #Why Is That Necessary?
-This provides the ability to debug your brainfuck code using Common Lisp's rich debugging environment, or integrate brainfuck into your lisp code should that be interesting to you.
+This provides the ability to debug your brainfuck code using Common Lisp's rich debugging environment, or integrate brainfuck into your lisp code should that be interesting to you. There are plenty of brainfuck interpreters out there, none of which work from within common lisp.
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape. The commands are:
@@ -58,23 +58,23 @@ Finally, there is a slightly more profane alias for the `interpret` function:
 ;; Also:
 > (brain:fuck "[This is a loop comment.]")
 ```
-Debugging brainfuck code can be done using all the normal lisp functions `step`, `trace`, `time`, etc., but require the user to understand how the internal code works. For this reason there is no tutorial on how to properly debug your brainfuck code, just a couple examples.
+Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc., but require the user to understand how the internal code works. For this reason there is no tutorial on how to properly debug your brainfuck code, just a couple examples. The user is encouraged to read the Common Lisp source code to get all the features of the Lisp debugging environment in their brainfuck.
 
 Suppose you want to make the tape only 10 bytes long:
 ```
 > (in-package :brain)
 > (setf *tape-size-default* 10) ;Sets the tape to only elements 0 to 9
 > (reset-globals) ;Resets the tape, pointer, and a few other things
-> *tape*
+> *tape-size-default* ;This is the variable that was just set
 10
-> *pointer*
+> *pointer* ;This shows that the pointer gets moved to the middle also
 5
 ```
 Suppose you want to find information about the + and - operations:
 ```
 > (trace incf-byte decf-byte)
 > (fuck "+-")
-;;;; This text following is implementation dependent, and looks like THIS on SBCL
+;;;; The following text is implementation dependent, and looks like this only on SBCL
   0: (INCF-BYTE)
   0: INCF-BYTE returned 1
   0: (DECF-BYTE)
@@ -86,7 +86,4 @@ Suppose you want to find information about the + and - operations:
 
 This software is licensed under the MIT free software license.
 ====
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/equwal/lispfuck/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
