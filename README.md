@@ -50,40 +50,46 @@ If everything runs smoothly you will be ready to brainfuck. If not then please *
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
 
-#Debugging
+#Debugging Brainfuck
 
-Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc., but require the user to understand how the internal code works. For this reason there is no tutorial on how to properly debug your brainfuck code, just a couple examples. The user is encouraged to read the Common Lisp source code to get all the features of the Lisp debugging environment in their brainfuck.
+Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc. The following functions and variables are exported and may be useful for debugging brainfuck code:
+```
+brain:fuck ;Used to execute a brainfuck string directly
+brain:*tape-size-default* ;Number of cells in the tape Default: 30,000
+brain:decf-byte ;The - operator function
+brain:incf-byte ;The + operator function
+brain:read-this-byte ;The , operator function
+brain:print-this-byte ;The . operator function
+brain:right-shift ;The > operator function
+brain:left-shift ;The < operator function
+brain:one-off-fuck ;Function called to loop over each character in the code
+brain:*separators* ;Characters that terminate #F brainfuck code Default: (#\Space, #\Newline)
+brain:byte-value ;Returns the value of the curren byte at the *pointer* position
+brain:*tape* ;Returns the entire tape
+brain:*pointer* ;The current position in the byte tape. Useful with byte-value Default: Exactly in the middle of the tape. (15,000)
+```
+Note that the variables `*tape*` and `*pointer*` are reset upon executing new brainfuck code. Once the execution is finished their state is frozen in time and ready to be debugged.
 
-To debug your brainfuck code you should start with:
+#Examples for Debugging:
+Suppose you want to make the tape only 10 bytes long (instead of the default 30000) This way you can easily view the tape contents after execution:
 ```
-> (in-package :brain)
+> (setf brain:*tape-size-default* 10) ;Sets the tape to only elements 0 to 9
+> #f->+
+> brain:*tape* ;Holds the byte tape vector
+#(0 0 0 0 0 255 1 0 0 0)
+> brain:*pointer*
+6
 ```
-to get access to the internal functions.
-
-Suppose you want to make the tape only 10 bytes long (instead of the default 30000):
+Suppose you want to find information about how often and with what values + and - were used:
 ```
-> (in-package :brain)
-> (setf *tape-size-default* 10) ;Sets the tape to only elements 0 to 9
-> (reset-globals) ;Resets the tape, pointer, and a few other things
-> *tape* ;Holds the byte tape vector
-#(0 0 0 0 0 0 0 0 0 0)
-> *pointer* ;This shows that the pointer gets moved to the middle regardless of the size
-5
-```
-Suppose you want to find information about the + and - operations:
-```
-> (trace incf-byte decf-byte)
-> (fuck "+-")
-;;;; The following text is implementation dependent, and looks like this only on SBCL
+> (trace brain:incf-byte brain:decf-byte)
+> (brain:fuck "+-")
+;;;; The following text is implementation dependent, and looks exactly like this only on SBCL
   0: (INCF-BYTE)
   0: INCF-BYTE returned 1
   0: (DECF-BYTE)
   0: DECF-BYTE returned 0
 ""
 ```
-#TODO:
-- Test on other implementations and operating systems (CCL, ECL, ABCL, CLISP, AllegroCL, LispWorks), to verify that it works.
-- Make debugging more user friendly. Better documentation and some external functions to be called with `brain:function` or `brain:*variable*`
-
 This software is licensed under the MIT free software license.
 ====

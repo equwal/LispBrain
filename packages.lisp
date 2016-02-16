@@ -8,7 +8,24 @@
 (in-package :cl-user)
 (defpackage :brain
   (:use :cl)
-  (:export :interpret
-	   :fuck))
-
-
+  (:export :fuck ;Used to execute a brainfuck string directly
+	   :*tape-size-default* ;Number of cells in the tape
+	   :decf-byte ;The - operator
+	   :incf-byte ;The + operator
+	   :read-this-byte ;The , operator
+	   :print-this-byte ;The . operator
+	   :right-shift ;The > operator
+	   :left-shift ;The < operator
+	   
+	   ;;Function called to loop over each character in the code
+	   :one-off-fuck
+	   
+	   :*separators* ;Characters that terminate #F brainfuck code
+	   
+	   ;; Returns the value of the current byte, most probably the one
+	   ;; that the code finished executing over
+	   :byte-value
+	   
+	   :*tape* ;contains the entire byte tape. Useful to view contents.
+	   :*pointer* ;The current position in the byte tape. Useful with byte-value
+	   ))

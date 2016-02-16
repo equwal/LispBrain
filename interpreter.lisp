@@ -22,12 +22,19 @@
 (defvar *output* ""
   "Defaults to an empty string because it is setf'd by other functions")
 
+(defparameter *initial-element* 0
+  "initial value for inside the byte array")
+
+(defparameter *separators* '(#\Newline #\Space)
+  "#F notation separators.
+These can be changed to allow whitespace comments")
 
 (defun make-tape-array ()
   "Creates a new tape array"
   (make-array *tape-size-default*
 	      :element-type '(unsigned-byte 8)
-	      :initial-element 0))
+	      :initial-element *initial-element*))
+
 (defvar *tape* (make-tape-array)
   "The tape array used to store each byte")
 
@@ -65,9 +72,8 @@
 (defun shorthand-fuck-aux (stream list)
   (let ((char (read-char stream nil nil)))
     ;; TODO: Replace the #\Space, #\Newline, #\Tab with proper separations
-    (if (or (char-equal char #\Space)
-	    (char-equal char #\Newline)
-	    (char-equal char #\Tab)
+    (if (or (some #'(lambda (x) (char-equal x char))
+		  *separators*)
 	    (null char))
 	(char-list->string (nreverse list))
 	(shorthand-fuck-aux stream (push char list)))))
@@ -179,7 +185,7 @@
 (defun skip-loop (position)
   (skip-loop-aux position 0))
 
-(defun interpret (brainfuck-string)
+(defun fuck (brainfuck-string)
   "Interpret the brainfuck"
   (reset-globals)
   (setf *brainfuck* brainfuck-string)
@@ -192,8 +198,4 @@
 	  (open-loop-at-zero () (setf position
 				      (1- (skip-loop position))))))
   *output*)
-
-(defun fuck (brainfuck-string)
-  "An alias for the interpret function"
-  (interpret brainfuck-string))
 
