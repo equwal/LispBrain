@@ -44,12 +44,14 @@ If everything runs smoothly you will be ready to Brainfuck. If there are issues 
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
+[![Picture of Emacs brain fuck notation](https://raw.githubusercontent.com/equwal/LispFuck/master/brain-fuck-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/brain-fuck-notation.png)
 ```
 > #f.+[.+] [<This is not inside the Brainfuck code, nor is + or -.>]
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
+[![Picture of Emacs pound letter F notation](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)
 
 #Debugging Brainfuck
 
