@@ -1,5 +1,6 @@
 # Lisp, Fuck
 LispFuck is a simple Brainfuck interpreter written in Common Lisp. It is the best brainfuck interpreter and debugger currently in existence. Users may: view the tape contents or individual cell contents, find the final position of execution in the tape, change the length of the byte tape in the REPL, and more.
+[![Picture of Emacs REPL](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape (the Universal Turing Machine). The commands are:
