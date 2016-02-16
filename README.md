@@ -22,9 +22,12 @@ These can be combined into a string such as the following "Hello World!" program
 "
 ```
 #How to install:
-- First [ASDF](https://common-lisp.net/project/asdf/) must be installed.
-- Install this clone into your ASDF load directory. The default on linux is `~/common-lisp/`:
+- Make sure you have a Common Lisp implementation installed. I recommend [Steel Bank Common Lisp](http://www.sbcl.org/)
+- [ASDF](https://common-lisp.net/project/asdf/) must be installed. Many Lisps come with it installed (including [SBCL](http://www.sbcl.org/)).
+- Install this code into your ASDF load directory. The default on linux is `~/common-lisp/`:
 ```
+me@linux:~$ mkdir common-lisp
+me@linux:~$ cd common-lisp
 me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
 ```
 - Run your favourite Common Lisp implementation and load the :brain package:
@@ -32,16 +35,15 @@ me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
 > (asdf:load-system :brain)
 ```
 
-If everything runs smoothly you will be ready to brainfuck. If there are issues then please *let it be known*. Now there is the choice between the `brain:fuck` and the `#F` notation. The `#F` notation is more concise but does not allow any whitespace in the brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"` inside of the brainfuck code. Below they are both shown:
+If everything runs smoothly you will be ready to brainfuck. If there are issues then please *let it be known*. Now one must chooses between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespace in the brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"` inside of the brainfuck code. Below they are both shown:
 ```
-> (brain:fuck ".+[.+] Print out all the ascii characters from 0 to 255")
-
+> (brain:fuck ".+[.+] Please escape your \" characters!")
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
 ```
-> #f.+[.+] This text is not inside the brainfuck code. <>,.+-[] has no effect on it
+> #f.+[.+] <This is not inside the brainfuck code, nor is + or [-].>
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
@@ -65,19 +67,21 @@ brain:byte-value ;Returns the value of the curren byte at the *pointer* position
 brain:*tape* ;Returns the entire tape
 brain:*pointer* ;The current position in the byte tape. Useful with byte-value Default: Exactly in the middle of the tape. (15,000)
 ```
-Note that the variables `*tape*` and `*pointer*` are reset upon executing new brainfuck code. Once the execution is finished their state is frozen in time and ready to be debugged.
+Note that the variables `*tape*` and `*pointer*` are reset upon executing new brainfuck code. Once the execution is finished their state is frozen in time and ready to be viewed.
 
 #Examples for Debugging:
 Suppose you want to make the tape only 10 bytes long (instead of the default 30000) This way you can easily view the tape contents after execution:
 ```
 > (setf brain:*tape-size-default* 10) ;Sets the tape to only elements 0 to 9
-> #f->+
+> #f->+ ;Sets cell to 255, shifts right and sets to 1
 > brain:*tape* ;Holds the byte tape vector
 #(0 0 0 0 0 255 1 0 0 0)
 > brain:*pointer*
 6
+> (byte-value)
+1
 ```
-Suppose you want to find information about how often and with what values + and - were used:
+Suppose you want to find information about the execution of `incf-byte` and `decf-byte`:
 ```
 > (trace brain:incf-byte brain:decf-byte)
 > (brain:fuck "+-")
