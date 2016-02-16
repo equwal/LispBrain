@@ -25,11 +25,17 @@ These can be combined into a string such as the following "Hello World!" program
 "
 ```
 #How to use:
-Store this project's code in the ASDF load directory; [ASDF](https://common-lisp.net/project/asdf/) must be installed. Then it may be loaded like this:
+- First [ASDF](https://common-lisp.net/project/asdf/) must be installed.
+- Install this clone into your ASDF load directory. The default on linux is `~/common-lisp/`:
+```
+me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
+```
+- Run your favourite Common Lisp implementation and load the :brain package:
 ```
 > (asdf:load-system :brain)
 ```
-Now there is the choice between `brain:fuck` and the `#F` notation. The #F notation is more concise but does not allow any whitespace in the brainfuck code. Below they are both shown
+
+If everything runs smoothly you will be ready to brainfuck. If not then please *let it be known*. So now there is the choice between the `brain:fuck` and the `#F` notation. The #F notation is more concise but does not allow any whitespace in the brainfuck code. Below they are both shown:
 ```
 > (brain:fuck ".+[.+] Print out all the ascii characters from 0 to 255")
 
@@ -42,6 +48,9 @@ Now there is the choice between `brain:fuck` and the `#F` notation. The #F notat
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
+
+#Debugging
+
 Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc., but require the user to understand how the internal code works. For this reason there is no tutorial on how to properly debug your brainfuck code, just a couple examples. The user is encouraged to read the Common Lisp source code to get all the features of the Lisp debugging environment in their brainfuck.
 
 To debug your brainfuck code you should start with:
@@ -77,4 +86,3 @@ Suppose you want to find information about the + and - operations:
 
 This software is licensed under the MIT free software license.
 ====
-
