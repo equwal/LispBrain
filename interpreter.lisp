@@ -14,6 +14,8 @@
 ;;;; OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THIS BRAINFUCK SOFTWARE OR THE USE OR OTHER DEALINGS IN THIS 
 ;;;; BRAINFUCK SOFTWARE.
 (in-package :brain)
+(defconstant +close-bracket+ #\])
+(defconstant +open-bracket+ #\[)
 (defparameter *tape-size-default* 30000
   "The size of the tape, in bytes, used to store each byte")
 
@@ -48,6 +50,33 @@
   (setf *brainfuck* "")
   (setf *pointer* (pointer-default))
   (setf *output* ""))
+
+(defun char-list->string-aux (char-list string position)
+  (if (null (first char-list))
+      string
+      (char-list->string-aux (rest char-list)
+			     (progn (setf (char string position)
+					  (first char-list))
+				    string)
+			     (1+ position))))
+(defun char-list->string (char-list)
+  (char-list->string-aux char-list (make-string (length char-list)) 0))
+
+(defun shorthand-fuck-aux (stream list)
+  (let ((char (read-char stream nil nil)))
+    ;; TODO: Replace the #\Space, #\Newline, #\Tab with proper separations
+    (if (or (char-equal char #\Space)
+	    (char-equal char #\Newline)
+	    (char-equal char #\Tab)
+	    (null char))
+	(char-list->string (nreverse list))
+	(shorthand-fuck-aux stream (push char list)))))
+
+(defun shorthand-fuck (stream char subchar)
+  "This is a 'Reader Macro' that provides the #F notation"
+  (declare (ignore char subchar))
+  (list 'fuck (shorthand-fuck-aux stream nil)))
+(set-dispatch-macro-character #\# #\F #'shorthand-fuck)
 
 (defun wrap-pointer ()
   (cond ((= *pointer* *tape-size-default*) (setf *pointer* 0))
@@ -88,7 +117,7 @@
 (defun goto-aux (current-position
 		 depth)
   (let ((this (elt *brainfuck* current-position)))
-    (if (char= #\[ this)
+    (if (char= +open-bracket+ this)
 	(if (= 1 depth)
 	    current-position
 	    (if (> depth 1)
@@ -96,7 +125,7 @@
 			  (1- depth))
 		(goto-aux (1- current-position)
 			  0)))
-	(if (char= #\] this)
+	(if (char= +close-bracket+ this)
 	    (goto-aux (1- current-position)
 		      (1+ depth))
 	    (goto-aux (1- current-position)
@@ -139,9 +168,9 @@
 
 (defun skip-loop-aux (position depth)
   (let ((this (char *brainfuck* position)))
-    (if (char= #\[ this)
+    (if (char= +open-bracket+ this)
 	(skip-loop-aux (1+ position) (1+ depth))
-	(if (char= #\] this)
+	(if (char= +close-bracket+ this)
 	    (if (= 1 depth)
 		(1+ position)
 		(skip-loop-aux (1+ position) (1- depth)))

@@ -20,43 +20,27 @@ Any other character is considered a "comment" meaning it does nothing.
 
 These can be combined into a string such as the following "Hello World!" program:
 ```
-> (interpret "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+> #f++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
 "Hello World!
 "
 ```
 #How to use:
 Store this project's code in the ASDF load directory; [ASDF](https://common-lisp.net/project/asdf/) must be installed. Then it may be loaded like this:
 ```
-> (asdf:load-system "brain")
+> (asdf:load-system :brain)
 ```
-The external functions are easier to use when they have been *used*, so execute this command.
+Now there is the choice between `brain:fuck` and the `#F` notation. The #F notation is more concise but does not allow any whitespace in the brainfuck code. Below they are both shown
 ```
-> (use-package :brain)
-or alternatively the brainfuck functions may be called using the brain:[function] notation, without being used:
-> (brain:fuck "[Put your code in the string]")
-```
-Your brainfuck interpreter is now loaded!
-
-You can run a string of brainfuck code with:
-```
-> (interpret "[code]")
-```
-For example:
-```
-> (interpret ".+[.+] Print out all the ascii characters")
+> (brain:fuck ".+[.+] Print out all the ascii characters from 0 to 255")
 
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
-```
-Take note that the `interpret` command returns a string, which allows the brainfuck to be used within other lisp code.
 
-Finally, there is a slightly more profane alias for the `interpret` function:
-```
-> (fuck "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.F+++++++++++++++.U------------------.C++++++++.K")
-"FUCK"
-;; Also:
-> (brain:fuck "[This is a loop comment.]")
+>#f.+[.+] ;Note that this comment is not part of the brainfuck because of the space between it and the brainfuck code.
+"�	
+
+ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
 Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc., but require the user to understand how the internal code works. For this reason there is no tutorial on how to properly debug your brainfuck code, just a couple examples. The user is encouraged to read the Common Lisp source code to get all the features of the Lisp debugging environment in their brainfuck.
 
@@ -89,8 +73,7 @@ Suppose you want to find information about the + and - operations:
 ```
 #TODO:
 - Test on other implementations and operating systems (CCL, ECL, ABCL, CLISP, AllegroCL, LispWorks), to verify that it works.
-- Make debugging more user friendly.
-- `#F` reader macro (Ex: `#F.+[.+]` instead of `(fuck ".+[.+]")`
+- Make debugging more user friendly. Better documentation and some external functions to be called with `brain:function` or `brain:*variable*`
 
 This software is licensed under the MIT free software license.
 ====
