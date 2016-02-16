@@ -1,5 +1,5 @@
 # Lisp Fuck
-Lisp Fuck is a simple brainfuck interpreter written in Common Lisp. It comes with the best debugging environment for brainfuck there is by using Common Lisp to run it.
+Lisp Fuck is a simple brainfuck interpreter written in Common Lisp. It comes with the best debugging environment for Brainfuck there is.
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape (the Universal Turing Machine). The commands are:
