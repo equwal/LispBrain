@@ -1,8 +1,5 @@
 # Lisp Fuck
-Lisp Fuck is a simple brainfuck interpreter written in Common Lisp.
-
-#Why Is That Necessary?
-This provides the ability to debug your brainfuck code using Common Lisp's rich debugging environment, or integrate brainfuck into your lisp code should that be interesting to you. There are plenty of brainfuck interpreters out there, none of which work from within Common Lisp.
+Lisp Fuck is a simple brainfuck interpreter written in Common Lisp. It comes with the best debugging environment for brainfuck there is by using Common Lisp to run it.
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape (the Universal Turing Machine). The commands are:
@@ -24,7 +21,7 @@ These can be combined into a string such as the following "Hello World!" program
 "Hello World!
 "
 ```
-#How to use:
+#How to install:
 - First [ASDF](https://common-lisp.net/project/asdf/) must be installed.
 - Install this clone into your ASDF load directory. The default on linux is `~/common-lisp/`:
 ```
@@ -35,7 +32,7 @@ me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
 > (asdf:load-system :brain)
 ```
 
-If everything runs smoothly you will be ready to brainfuck. If not then please *let it be known*. So now there is the choice between the `brain:fuck` and the `#F` notation. The #F notation is more concise but does not allow any whitespace in the brainfuck code. Below they are both shown:
+If everything runs smoothly you will be ready to brainfuck. If there are issues then please *let it be known*. Now there is the choice between the `brain:fuck` and the `#F` notation. The `#F` notation is more concise but does not allow any whitespace in the brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"` inside of the brainfuck code. Below they are both shown:
 ```
 > (brain:fuck ".+[.+] Print out all the ascii characters from 0 to 255")
 
@@ -44,7 +41,7 @@ If everything runs smoothly you will be ready to brainfuck. If not then please *
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
 ```
-> #f.+[.+] ;Note that this comment is not part of the brainfuck because of the space between it and the brainfuck code.
+> #f.+[.+] This text is not inside the brainfuck code. <>,.+-[] has no effect on it
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
@@ -52,7 +49,7 @@ If everything runs smoothly you will be ready to brainfuck. If not then please *
 
 #Debugging Brainfuck
 
-Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc. The following functions and variables are exported and may be useful for debugging brainfuck code:
+Debugging brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc. The following functions and variables are exported to the user and may be useful for debugging brainfuck code:
 ```
 brain:fuck ;Used to execute a brainfuck string directly
 brain:*tape-size-default* ;Number of cells in the tape Default: 30,000
