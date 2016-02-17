@@ -22,12 +22,16 @@
 (defvar *output* ""
   "Defaults to an empty string because it is setf'd by other functions")
 
+(defvar *loop-depth* 0
+  "Used to produce helpful error messages about extra ']' characters in 
+BF code extra '[' characters are not helped by this variable")
+
 (defparameter *initial-element* 0
   "initial value for inside the byte array")
 
-(defparameter *separators* '(#\Newline #\Space)
-  "#F notation separators.
-These can be changed to allow whitespace comments")
+(defparameter *separators* '(#\Newline #\Space #\))
+  "#F notation separators. These can be changed to allow whitespace comments 
+or to break a right parentheses immediately to the right side")
 
 (defun make-tape-array ()
   "Creates a new tape array"
@@ -70,12 +74,14 @@ These can be changed to allow whitespace comments")
   (char-list->string-aux char-list (make-string (length char-list)) 0))
 
 (defun shorthand-fuck-aux (stream list)
+  "Recursive reader macro. A compiler from within Lisp!"
   (let ((char (read-char stream nil nil)))
-    ;; TODO: Replace the #\Space, #\Newline, #\Tab with proper separations
     (if (or (some #'(lambda (x) (char-equal x char))
 		  *separators*)
 	    (null char))
-	(char-list->string (nreverse list))
+	(progn (when (char= #\) char)
+		 (unread-char char stream))
+	       (char-list->string (nreverse list)))
 	(shorthand-fuck-aux stream (push char list)))))
 
 (defun shorthand-fuck (stream char subchar)
@@ -183,7 +189,8 @@ These can be changed to allow whitespace comments")
 	    (skip-loop-aux (1+ position) depth)))))
 
 (defun skip-loop (position)
-  (skip-loop-aux position 0))
+  (handler-case (skip-loop-aux position 0)
+    ))
 
 (defun fuck (brainfuck-string)
   "Interpret the brainfuck"
@@ -192,10 +199,14 @@ These can be changed to allow whitespace comments")
   ;; Loop over each character in the string
   (loop for position to (1- (length *brainfuck*))
      do (handler-case (one-off-fuck position)
-	  ;; Handles looping with the condition system
-	  (end-of-loop () (setf position
-				(1- (goto position))))
-	  (open-loop-at-zero () (setf position
-				      (1- (skip-loop position))))))
+	  ;; Handles brainfuck looping with the condition system
+	  (end-of-loop () (if (<= *loop-depth* 0)
+			      (error "Extra right square bracket ']' does not match a '[' somewhere else")
+			      (progn (decf *loop-depth*)
+				     (setf position
+					   (1- (goto position))))))
+	  (open-loop-at-zero () (progn (incf *loop-depth*)
+				       (setf position
+					     (1- (skip-loop position)))))))
   *output*)
 
