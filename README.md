@@ -58,20 +58,20 @@ If everything runs smoothly you will be ready to Brainfuck. If there are issues 
 
 Debugging Brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc. The following functions and variables are exported to the user and may be useful for debugging Brainfuck code:
 ```
-brain:fuck ;Used to execute a Brainfuck string directly.
+brain:fuck                ;Used to execute a Brainfuck string directly.
 brain:*tape-size-default* ;Number of cells in the tape. Default: 30,000.
-brain:decf-byte ;The - operator function.
-brain:incf-byte ;The + operator function.
-brain:read-this-byte ;The , operator function.
-brain:print-this-byte ;The . operator function.
-brain:right-shift ;The > operator function.
-brain:left-shift ;The < operator function.
-brain:one-off-fuck ;Function called to loop over each character in the code.
-brain:*separators* ;Characters that terminate #F Brainfuck code. Default: (#\Space, #\Newline).
-brain:byte-value ;Returns the value of the curren byte at the *pointer* position.
-brain:*tape* ;Returns the entire tape.
-brain:*pointer* ;The current position in the byte tape. Useful with byte-value. 
-                Default: Exactly in the middle of the tape (15,000).
+brain:decf-byte           ;The - operator function.
+brain:incf-byte           ;The + operator function.
+brain:read-this-byte      ;The , operator function.
+brain:print-this-byte     ;The . operator function.
+brain:right-shift         ;The > operator function.
+brain:left-shift          ;The < operator function.
+brain:one-off-fuck        ;Function called to loop over each character in the code.
+brain:*separators*        ;Characters that terminate #F Brainfuck code. Default: (#\Space, #\Newline).
+brain:byte-value          ;Returns the value of the curren byte at the *pointer* position.
+brain:*tape*              ;Stores the entire tape.
+brain:*pointer*           ;Stores the current position in the byte tape. Useful with byte-value. 
+                              Default: Exactly in the middle of the tape (15,000).
 ```
 Note that the variables `*tape*` and `*pointer*` are reset upon executing new Brainfuck code. Once the execution is finished their state is frozen in time and ready to be viewed.
 
