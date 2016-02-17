@@ -22,10 +22,6 @@
 (defvar *output* ""
   "Defaults to an empty string because it is setf'd by other functions")
 
-(defvar *loop-depth* 0
-  "Used to produce helpful error messages about extra ']' characters in 
-BF code extra '[' characters are not helped by this variable")
-
 (defparameter *initial-element* 0
   "initial value for inside the byte array")
 
@@ -63,8 +59,14 @@ comments or to break a right parentheses immediately to the right side")
   (setf *tape* (make-tape-array))
   (setf *brainfuck* "")
   (setf *pointer* (pointer-default))
-  (setf *output* "")
-  (setf *loop-depth* 0))
+  (setf *output* ""))
+
+
+(defvar *tape* (make-tape-array)
+  "The tape array used to store each byte")
+
+(defvar *brainfuck* ""
+  "Place to store brainfuck code input string globally")
 
 (defun any-char (char sequence)
   "Compare the 'char' to each element of 'sequence' using the 'some'
@@ -189,17 +191,16 @@ command"
 
 (defun skip-loop-aux (position depth)
   (let ((this (char *brainfuck* position)))
-    (cond ((char= +open-bracket+ this)
-	   (skip-loop-aux (1+ position) (1+ depth)))
-	  ((char= +close-bracket+ this)
+    (if (char= +open-bracket+ this)
+	(skip-loop-aux (1+ position) (1+ depth))
+	(if (char= +close-bracket+ this)
 	    (if (= 1 depth)
 		(1+ position)
-		(skip-loop-aux (1+ position) (1- depth))))
-	  (t (skip-loop-aux (1+ position) depth)))))
+		(skip-loop-aux (1+ position) (1- depth)))
+	    (skip-loop-aux (1+ position) depth)))))
 
 (defun skip-loop (position)
-  (handler-case (skip-loop-aux position 0)
-    ))
+  (skip-loop-aux position 0))
 
 (defun fuck (brainfuck-string)
   "Interpret the brainfuck"
@@ -208,14 +209,9 @@ command"
   ;; Loop over each character in the string
   (loop for position to (1- (length *brainfuck*))
      do (handler-case (one-off-fuck position)
-	  ;; Handles brainfuck looping with the condition system
-	  (end-of-loop () (if (<= *loop-depth* 0)
-			      (error "Extra right square bracket ']' does not match a '[' somewhere else")
-			      (progn (decf *loop-depth*)
-				     (setf position
-					   (1- (goto position))))))
-	  (open-loop-at-zero () (progn (incf *loop-depth*)
-				       (setf position
-					     (1- (skip-loop position)))))))
+	  ;; Handles looping with the condition system
+	  (end-of-loop () (setf position
+				(1- (goto position))))
+	  (open-loop-at-zero () (setf position
+				      (1- (skip-loop position))))))
   *output*)
-
