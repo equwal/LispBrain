@@ -1,5 +1,5 @@
 # Lisp, Fuck
-LispFuck is a simple Brainfuck interpreter written in Common Lisp. It is the best brainfuck interpreter and debugger currently in existence. Users may: view the tape contents or individual cell contents, find the final position of execution in the tape, change the length of the byte tape in the REPL, and more.
+LispFuck is a simple Brainfuck interpreter written in Common Lisp. It has the best brainfuck debugging capabilities currently in existence, and code can be interpreted or compiled. Users may: view the tape contents or individual cell contents, find the final position of execution in the tape, change the length of the byte tape in the REPL, and more.
 [![Picture of Emacs REPL](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)
 
 #Brainfuck
@@ -54,6 +54,8 @@ If everything runs smoothly you will be ready to Brainfuck. If there are issues 
 ```
 [![Picture of Emacs pound letter F notation](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)
 
+Code can be saved in a file and run at the repl with the `(load "filepath")` command, and compiled with the `(compile-file "filepath")` command. [SBCL](http://www.sbcl.org/) will always compile your code for you. I recommend not compiling code unless speed is truly important; compiling can make the debugging capabilities of Common Lisp implementations less usable.
+
 #Debugging Brainfuck
 
 Debugging Brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc. The following functions and variables are exported to the user and may be useful for debugging Brainfuck code:
@@ -99,6 +101,6 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
 ""
 ```
 #Congratulations!
-You have reached the end of this README.md. Please sumbit any feedback to me via email.
+You have reached the end of this README. Please sumbit any feedback to me via email.
 This software is licensed under the MIT free software license.
 ====
