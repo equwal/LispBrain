@@ -100,6 +100,10 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
   0: DECF-BYTE returned 0
 ""
 ```
+
+#Bugs/TODO:
+- Provide a useful error for extra loop characters ("]" and "["). Right now the program pretends like nothing special happened and results in an implemenation-dependent and wholly unhelpful error message.
+
 #Congratulations!
 You have reached the end of this README. Please sumbit any feedback to me via email.
 This software is licensed under the MIT free software license.
