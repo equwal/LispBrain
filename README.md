@@ -1,5 +1,5 @@
 # Lisp, Fuck
-LispFuck is a simple Brainfuck interpreter written in Common Lisp. It is the best brainfuck interpreter and debugger currently in existence. Users may: view the tape contents or individual cell contents, find the final position of execution in the tape, change the length of the byte tape in the REPL, and more.
+LispFuck is a simple Brainfuck interpreter written in Common Lisp. It has the best brainfuck debugging capabilities currently in existence, and code can be interpreted or compiled. Users may: view the tape contents or individual cell contents, find the final position of execution in the tape, change the length of the byte tape in the REPL, and more.
 [![Picture of Emacs REPL](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)
 
 #Brainfuck
@@ -37,6 +37,7 @@ me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
 > (asdf:load-system :brain)
 ```
 
+#How to Use:
 If everything runs smoothly you will be ready to Brainfuck. If there are issues then please *let it be known*. Now one must chooses between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespace in the Brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"` inside of the Brainfuck code. Below they are both shown:
 ```
 > (brain:fuck ".+[.+] Please escape your \" characters!")
@@ -53,24 +54,26 @@ If everything runs smoothly you will be ready to Brainfuck. If there are issues 
 ```
 [![Picture of Emacs pound letter F notation](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)
 
+Code can be saved in a file and run at the repl with the `(load "filepath")` command, and compiled with the `(compile-file "filepath")` command. [SBCL](http://www.sbcl.org/) will always compile your code for you. I recommend not compiling code unless speed is truly important; compiling can make the debugging capabilities of Common Lisp implementations less usable.
+
 #Debugging Brainfuck
 
 Debugging Brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc. The following functions and variables are exported to the user and may be useful for debugging Brainfuck code:
 ```
-brain:fuck ;Used to execute a Brainfuck string directly.
+brain:fuck                ;Used to execute a Brainfuck string directly.
 brain:*tape-size-default* ;Number of cells in the tape. Default: 30,000.
-brain:decf-byte ;The - operator function.
-brain:incf-byte ;The + operator function.
-brain:read-this-byte ;The , operator function.
-brain:print-this-byte ;The . operator function.
-brain:right-shift ;The > operator function.
-brain:left-shift ;The < operator function.
-brain:one-off-fuck ;Function called to loop over each character in the code.
-brain:*separators* ;Characters that terminate #F Brainfuck code. Default: (#\Space, #\Newline).
-brain:byte-value ;Returns the value of the curren byte at the *pointer* position.
-brain:*tape* ;Returns the entire tape.
-brain:*pointer* ;The current position in the byte tape. Useful with byte-value. 
-                Default: Exactly in the middle of the tape (15,000).
+brain:decf-byte           ;The - operator function.
+brain:incf-byte           ;The + operator function.
+brain:read-this-byte      ;The , operator function.
+brain:print-this-byte     ;The . operator function.
+brain:right-shift         ;The > operator function.
+brain:left-shift          ;The < operator function.
+brain:one-off-fuck        ;Function called to loop over each character in the code.
+brain:*separators*        ;Characters that terminate #F Brainfuck code. Default: (#\Space, #\Newline).
+brain:byte-value          ;Returns the value of the curren byte at the *pointer* position.
+brain:*tape*              ;Stores the entire tape.
+brain:*pointer*           ;Stores the current position in the byte tape. Useful with byte-value. 
+                              Default: Exactly in the middle of the tape (15,000).
 ```
 Note that the variables `*tape*` and `*pointer*` are reset upon executing new Brainfuck code. Once the execution is finished their state is frozen in time and ready to be viewed.
 
@@ -97,5 +100,11 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
   0: DECF-BYTE returned 0
 ""
 ```
+
+#Bugs/TODO:
+- Provide a useful error for extra loop characters ("]" and "["). Right now the program pretends like nothing special happened and results in an implemenation-dependent and wholly unhelpful error message.
+
+#Congratulations!
+You have reached the end of this README. Please sumbit any feedback to me via email.
 This software is licensed under the MIT free software license.
 ====
