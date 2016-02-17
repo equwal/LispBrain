@@ -37,6 +37,7 @@ me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
 > (asdf:load-system :brain)
 ```
 
+#How to Use:
 If everything runs smoothly you will be ready to Brainfuck. If there are issues then please *let it be known*. Now one must chooses between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespace in the Brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"` inside of the Brainfuck code. Below they are both shown:
 ```
 > (brain:fuck ".+[.+] Please escape your \" characters!")
