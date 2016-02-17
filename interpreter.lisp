@@ -63,7 +63,8 @@ comments or to break a right parentheses immediately to the right side")
   (setf *tape* (make-tape-array))
   (setf *brainfuck* "")
   (setf *pointer* (pointer-default))
-  (setf *output* ""))
+  (setf *output* "")
+  (setf *loop-depth* 0))
 
 (defun any-char (char sequence)
   "Compare the 'char' to each element of 'sequence' using the 'some'
@@ -188,13 +189,13 @@ command"
 
 (defun skip-loop-aux (position depth)
   (let ((this (char *brainfuck* position)))
-    (if (char= +open-bracket+ this)
-	(skip-loop-aux (1+ position) (1+ depth))
-	(if (char= +close-bracket+ this)
+    (cond ((char= +open-bracket+ this)
+	   (skip-loop-aux (1+ position) (1+ depth)))
+	  ((char= +close-bracket+ this)
 	    (if (= 1 depth)
 		(1+ position)
-		(skip-loop-aux (1+ position) (1- depth)))
-	    (skip-loop-aux (1+ position) depth)))))
+		(skip-loop-aux (1+ position) (1- depth))))
+	  (t (skip-loop-aux (1+ position) depth)))))
 
 (defun skip-loop (position)
   (handler-case (skip-loop-aux position 0)
