@@ -30,8 +30,11 @@ BF code extra '[' characters are not helped by this variable")
   "initial value for inside the byte array")
 
 (defparameter *separators* '(#\Newline #\Space #\))
-  "#F notation separators. These can be changed to allow whitespace comments 
-or to break a right parentheses immediately to the right side")
+  "#F notation separators. These can be changed to allow whitespace 
+comments or to break a right parentheses immediately to the right side")
+
+(defparameter *unread-separators* '(#\))
+  "#F notation separators that should be unread for use by other functions")
 
 (defun make-tape-array ()
   "Creates a new tape array"
@@ -62,6 +65,12 @@ or to break a right parentheses immediately to the right side")
   (setf *pointer* (pointer-default))
   (setf *output* ""))
 
+(defun any-char (char sequence)
+  "Compare the 'char' to each element of 'sequence' using the 'some'
+command"
+  (some #'(lambda (x) (char-equal x char))
+	sequence))
+
 (defun char-list->string-aux (char-list string position)
   (if (null (first char-list))
       string
@@ -76,10 +85,9 @@ or to break a right parentheses immediately to the right side")
 (defun shorthand-fuck-aux (stream list)
   "Recursive reader macro. A compiler from within Lisp!"
   (let ((char (read-char stream nil nil)))
-    (if (or (some #'(lambda (x) (char-equal x char))
-		  *separators*)
+    (if (or (any-char char *separators*)
 	    (null char))
-	(progn (when (char= #\) char)
+	(progn (when (any-char char *unread-separators*)
 		 (unread-char char stream))
 	       (char-list->string (nreverse list)))
 	(shorthand-fuck-aux stream (push char list)))))
