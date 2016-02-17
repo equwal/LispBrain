@@ -102,7 +102,7 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
 ```
 
 #Bugs/TODO:
-- Provide a useful error for extra loop characters ("]" and "["). Right now the program pretends like nothing special happened and results in an implemenation-dependent and wholly unhelpful error message.
+- None right now, feedback is encouraged! My email is spensertruexonline@gmail.com
 
 #Congratulations!
 You have reached the end of this README. Please sumbit any feedback to me via email.
