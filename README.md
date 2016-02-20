@@ -69,7 +69,7 @@ brain:print-this-byte     ;The . operator function.
 brain:right-shift         ;The > operator function.
 brain:left-shift          ;The < operator function.
 brain:one-off-fuck        ;Function called to loop over each character in the code.
-brain:*separators*        ;Characters that terminate #F Brainfuck code. Default: (#\Space, #\Newline).
+brain:*separators*        ;Characters that terminate #F Brainfuck code. Default: (#\Space #\) #\Newline).
 brain:byte-value          ;Returns the value of the curren byte at the *pointer* position.
 brain:*tape*              ;Stores the entire tape.
 brain:*pointer*           ;Stores the current position in the byte tape. Useful with byte-value. 
