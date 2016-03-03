@@ -113,7 +113,10 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
 #Bugs/TODO:
 - Include instructions for users on Windows.
 
-#Congratulations!
-You have reached the end of this README. Please sumbit any feedback to me via email.
+#Conclusion
+All of the colorful pictures of code being executed were taken using Emacs and Slime, and edited with GIMP.
+
+Please sumbit any feedback to me via email.
+
 This software is licensed under the MIT free software license.
 ====
