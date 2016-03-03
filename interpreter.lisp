@@ -61,13 +61,6 @@ comments or to break a right parentheses immediately to the right side")
   (setf *pointer* (pointer-default))
   (setf *output* ""))
 
-
-(defvar *tape* (make-tape-array)
-  "The tape array used to store each byte")
-
-(defvar *brainfuck* ""
-  "Place to store brainfuck code input string globally")
-
 (defun any-char (char sequence)
   "Compare the 'char' to each element of 'sequence' using the 'some'
 command"
