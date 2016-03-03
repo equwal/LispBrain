@@ -37,6 +37,15 @@ me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
 > (asdf:load-system :brain)
 ```
 
+If you are unable to find where the ASDF load directory is, you may choose to load the files thusly:
+```
+> (load "[filepath]/packages.lisp")
+> (load "[filepath]/interpreter.lisp")
+> (load "[filepath]/brain.asd")
+> (asdf:load-system :brain)
+```
+
+In Allegro common lisp one must first use `(require :asdf)` before executing any other commands in order to activate the ASDF system.
 #How to Use:
 If everything runs smoothly you will be ready to Brainfuck. If there are issues then please *let it be known*. Now one must chooses between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespace in the Brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"` inside of the Brainfuck code. Below they are both shown:
 ```
