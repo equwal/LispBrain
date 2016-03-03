@@ -25,7 +25,7 @@ These can be combined into a string such as the following "Hello World!" program
 ```
 #How to install:
 - Make sure you have a Common Lisp implementation installed. I recommend [Steel Bank Common Lisp](http://www.sbcl.org/).
-- [ASDF](https://common-lisp.net/project/asdf/) must be installed. Many Lisps come with it installed (including [SBCL](http://www.sbcl.org/)).
+- [ASDF](https://common-lisp.net/project/asdf/) must be installed. Many Lisps come with it, no installation necessary (including [SBCL](http://www.sbcl.org/)).
 - Install this code into your ASDF *load directory*. The default on linux is usually `~/common-lisp/`:
 ```
 me@linux:~$ mkdir common-lisp
