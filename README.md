@@ -26,7 +26,7 @@ These can be combined into a string such as the following "Hello World!" program
 #How to install:
 - Make sure you have a Common Lisp implementation installed. I recommend [Steel Bank Common Lisp](http://www.sbcl.org/).
 - [ASDF](https://common-lisp.net/project/asdf/) must be installed. Many Lisps come with it installed (including [SBCL](http://www.sbcl.org/)).
-- Install this code into your ASDF load directory. The default on linux is `~/common-lisp/`:
+- Install this code into your ASDF *load directory*. The default on linux is usually `~/common-lisp/`:
 ```
 me@linux:~$ mkdir common-lisp
 me@linux:~$ cd common-lisp
@@ -45,18 +45,18 @@ If you are unable to find where the ASDF load directory is, you may choose to lo
 > (asdf:load-system :brain)
 ```
 
-In Allegro common lisp one must first use `(require :asdf)` before executing any other commands in order to activate the ASDF system.
+In Allegro common lisp one must first use `(require :asdf)` before executing any other commands in order to activate the preinstalled ASDF system.
 #How to Use:
-If everything runs smoothly you will be ready to Brainfuck. If there are issues then please *let it be known*. Now one must chooses between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespace in the Brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"` inside of the Brainfuck code. Below they are both shown:
+If everything runs smoothly you will be ready to Brainfuck. If there are issues then please *let it be known*. Now one must chooses between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespace in the Brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"`, or an unescaped literal backward slash `\` inside of the Brainfuck code. Below they are both shown:
 ```
-> (brain:fuck ".+[.+] Please escape your \" characters!")
+> (brain:fuck ".+[.+] Please escape your \" and \\ characters!")
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
 [![Picture of Emacs brain fuck notation](https://raw.githubusercontent.com/equwal/LispFuck/master/brain-fuck-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/brain-fuck-notation.png)
 ```
-> #f.+[.+] [<This is not inside the Brainfuck code, nor is + or -.>]
+> #f.+[.+] <This is not inside the Brainfuck code, nor is + or -.>[]
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
@@ -111,7 +111,7 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
 ```
 
 #Bugs/TODO:
-- None right now, feedback is encouraged! My email is spensertruexonline@gmail.com
+- Include instructions for users on Windows.
 
 #Congratulations!
 You have reached the end of this README. Please sumbit any feedback to me via email.
