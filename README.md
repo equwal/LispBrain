@@ -39,9 +39,9 @@ me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
 
 If you are unable to find where the ASDF load directory is, you may choose to load the files thusly:
 ```
-> (load "[filepath]/packages.lisp")
-> (load "[filepath]/interpreter.lisp")
-> (load "[filepath]/brain.asd")
+> (load "[filepath]/code/packages.lisp")
+> (load "[filepath]/code/interpreter.lisp")
+> (load "[filepath]/code/brain.asd")
 > (asdf:load-system :brain)
 ```
 
