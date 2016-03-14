@@ -14,8 +14,10 @@
 ;;;; OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THIS BRAINFUCK SOFTWARE OR THE USE OR OTHER DEALINGS IN THIS 
 ;;;; BRAINFUCK SOFTWARE.
 (in-package :brain)
-(defconstant +close-bracket+ #\])
-(defconstant +open-bracket+ #\[)
+
+(defparameter *max-byte* 255)
+(defparameter *min-byte* 0)
+(defparameter *byte-element-type* '(unsigned-byte 8))
 (defparameter *tape-size-default* 30000
   "The size of the tape, in bytes, used to store each byte")
 
@@ -35,7 +37,7 @@ comments or to break a right parentheses immediately to the right side")
 (defun make-tape-array ()
   "Creates a new tape array"
   (make-array *tape-size-default*
-	      :element-type '(unsigned-byte 8)
+	      :element-type *byte-element-type*
 	      :initial-element *initial-element*))
 
 (defvar *tape* (make-tape-array)
@@ -55,28 +57,47 @@ comments or to break a right parentheses immediately to the right side")
 (defvar *pointer* (pointer-default)
   "The pointer location for the tape. Starts near the middle.")
 
+(defvar *code-position* 0)
+
+(defparameter *operators* '((open-loop . #\[)
+			    (close-loop . #\])
+			    (right-shift . #\>)
+			    (left-shift . #\<)
+			    (print-this-byte . #\.)
+			    (read-this-byte . #\,)
+			    (incf-byte . #\+)
+			    (decf-byte . #\-))
+  "The operator's function name and it's character. Nothing is passed to the functions")
+
+(defun open-loop ()
+  "Open a brainfuck loop with this function"
+  ;; For non-zero the loop will be executed naturally until the ], but for a zero the position must be skipped
+    (if (= 0 (byte-value))
+	(setf *code-position*
+	      (1- (skip-loop *code-position*)))))
+
+(defun close-loop ()
+  (setf *code-position*
+	(1- (goto *code-position*)))) ;#f] bug is here
+
+(defun char->function (char)
+  (car (rassoc char *operators*)))
+
+(defun this-code-character ()
+  (elt *brainfuck* *code-position*))
+
+(defun one-off-fuck ()
+  "Interpret a single brainfuck character and execute it."
+  (let ((function (char->function (this-code-character)))) 
+    (if function
+	(funcall function))))
+
 (defun reset-globals ()
   (setf *tape* (make-tape-array))
   (setf *brainfuck* "")
   (setf *pointer* (pointer-default))
-  (setf *output* ""))
-
-(defun any-char (char sequence)
-  "Compare the 'char' to each element of 'sequence' using the 'some'
-command"
-  (some #'(lambda (x) (char-equal x char))
-	sequence))
-
-(defun char-list->string-aux (char-list string position)
-  (if (null (first char-list))
-      string
-      (char-list->string-aux (rest char-list)
-			     (progn (setf (char string position)
-					  (first char-list))
-				    string)
-			     (1+ position))))
-(defun char-list->string (char-list)
-  (char-list->string-aux char-list (make-string (length char-list)) 0))
+  (setf *output* "")
+  (setf *code-position* 0))
 
 (defun shorthand-fuck-aux (stream list)
   "Recursive reader macro. A compiler from within Lisp!"
@@ -96,14 +117,10 @@ command"
 
 (defun wrap-pointer ()
   (cond ((= *pointer* *tape-size-default*) (setf *pointer* 0))
-		((= *pointer* -1) (setf *pointer* (1- *tape-size-default*)))))
+	((= *pointer* -1) (setf *pointer* (1- *tape-size-default*)))))
+
 (defmacro byte-value ()
   `(aref *tape* *pointer*))
-
-(defun remove-first (string)
-  (if (= 1 (length string))
-      ""
-      (subseq string 1)))
 
 (defmacro crement-if (operation
 		      bound
@@ -115,20 +132,11 @@ command"
 
 (defun incf-byte ()
   "Increment a byte, and wrap to 0 if 255 is incremented"
-  (crement-if incf 255 0))
+  (crement-if incf *max-byte* *min-byte*))
 
 (defun decf-byte ()
   "Decrement a byte, and wrap to 255 if 0 is decremented"
-  (crement-if decf 0 255))
-
-(defun first-elt (string)
-  (elt string 0))
-
-(defun ascii->integer (char)
-  (char-code char))
-
-(defun integer->ascii (num)
-  (code-char num))
+  (crement-if decf *min-byte* *max-byte*))
 
 (defun goto-aux (current-position
 		 depth)
@@ -169,19 +177,6 @@ command"
   (setf (byte-value)
 	(ascii->integer (read-char))))
 
-(defun one-off-fuck (position)
-  "Run a single first brainfuck-char."
-  (case (elt *brainfuck* position)
-    (#\, (read-this-byte))
-    (#\. (print-this-byte))
-    (#\+ (incf-byte))
-    (#\- (decf-byte))
-    (#\] (error 'end-of-loop))
-    (#\[ (if (= 0 (byte-value))
-	     (error 'open-loop-at-zero)))
-    (#\> (right-shift))
-    (#\< (left-shift))))
-
 (defun skip-loop-aux (position depth)
   (let ((this (char *brainfuck* position)))
     (if (char= +open-bracket+ this)
@@ -200,11 +195,7 @@ command"
   (reset-globals)
   (setf *brainfuck* brainfuck-string)
   ;; Loop over each character in the string
-  (loop for position to (1- (length *brainfuck*))
-     do (handler-case (one-off-fuck position)
-	  ;; Handles looping with the condition system
-	  (end-of-loop () (setf position
-				(1- (goto position))))
-	  (open-loop-at-zero () (setf position
-				      (1- (skip-loop position))))))
+  (loop until (= *code-position* (length *brainfuck*)) 
+     do (one-off-fuck)
+     do (incf *code-position*))
   *output*)

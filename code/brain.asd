@@ -16,4 +16,5 @@
   :license "MIT License (c) 2016"
   :description "Brainfuck interpreter from witin lisp"
   :components ((:file "packages")
-	       (:file "interpreter" :depends-on ("packages"))))
+	       (:file "utils" :depends-on ("packages"))
+	       (:file "interpreter" :depends-on ("packages" "utils"))))
