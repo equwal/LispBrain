@@ -69,6 +69,17 @@ comments or to break a right parentheses immediately to the right side")
 			    (decf-byte . #\-))
   "The operator's function name and it's character. Nothing is passed to the functions")
 
+(defmacro byte-value ()
+  `(aref *tape* *pointer*))
+
+(defmacro crement-if (operation
+		      bound
+		      bound-next)
+  "Increment or decrement a byte"
+  `(if (= (byte-value) ,bound)
+      (setf (byte-value) ,bound-next)
+      (,operation (byte-value))))
+
 (defun open-loop ()
   "Open a brainfuck loop with this function"
   ;; For non-zero the loop will be executed naturally until the ], but for a zero the position must be skipped
@@ -82,6 +93,9 @@ comments or to break a right parentheses immediately to the right side")
 
 (defun char->function (char)
   (car (rassoc char *operators*)))
+
+(defun name->char (name)
+  (cdr (assoc name *operators*)))
 
 (defun this-code-character ()
   (elt *brainfuck* *code-position*))
@@ -119,17 +133,6 @@ comments or to break a right parentheses immediately to the right side")
   (cond ((= *pointer* *tape-size-default*) (setf *pointer* 0))
 	((= *pointer* -1) (setf *pointer* (1- *tape-size-default*)))))
 
-(defmacro byte-value ()
-  `(aref *tape* *pointer*))
-
-(defmacro crement-if (operation
-		      bound
-		      bound-next)
-  "Increment or decrement a byte"
-  `(if (= (byte-value) ,bound)
-      (setf (byte-value) ,bound-next)
-      (,operation (byte-value))))
-
 (defun incf-byte ()
   "Increment a byte, and wrap to 0 if 255 is incremented"
   (crement-if incf *max-byte* *min-byte*))
@@ -141,7 +144,7 @@ comments or to break a right parentheses immediately to the right side")
 (defun goto-aux (current-position
 		 depth)
   (let ((this (elt *brainfuck* current-position)))
-    (if (char= +open-bracket+ this)
+    (if (char= (name->char 'open-loop) this)
 	(if (= 1 depth)
 	    current-position
 	    (if (> depth 1)
@@ -149,11 +152,12 @@ comments or to break a right parentheses immediately to the right side")
 			  (1- depth))
 		(goto-aux (1- current-position)
 			  0)))
-	(if (char= +close-bracket+ this)
+	(if (char= (name->char 'close-loop) this)
 	    (goto-aux (1- current-position)
 		      (1+ depth))
 	    (goto-aux (1- current-position)
 		      depth)))))
+
 (defun goto (position)
   "Work backwards and find the matching open bracket."
   (goto-aux position 0))
@@ -179,9 +183,9 @@ comments or to break a right parentheses immediately to the right side")
 
 (defun skip-loop-aux (position depth)
   (let ((this (char *brainfuck* position)))
-    (if (char= +open-bracket+ this)
+    (if (char= (name->char 'open-loop) this)
 	(skip-loop-aux (1+ position) (1+ depth))
-	(if (char= +close-bracket+ this)
+	(if (char= (name->char 'close-loop) this)
 	    (if (= 1 depth)
 		(1+ position)
 		(skip-loop-aux (1+ position) (1- depth)))
