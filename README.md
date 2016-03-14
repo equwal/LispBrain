@@ -1,6 +1,6 @@
 # Lisp, Fuck
 LispFuck is a simple Brainfuck interpreter written in Common Lisp. It has the best brainfuck debugging capabilities currently in existence, and code can be interpreted or compiled. Users may: view the tape contents or individual cell contents, find the final position of execution in the tape, change the length of the byte tape in the REPL, and more.
-[![Picture of Emacs REPL](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/repl.png)
+[![Picture of Emacs REPL](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/repl.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/repl.png)
 
 #Brainfuck
 Brainfuck is an esoteric programming language that works on a theoretical byte tape (the Universal Turing Machine). The commands are:
@@ -54,14 +54,14 @@ If everything runs smoothly you will be ready to Brainfuck. If there are issues 
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
-[![Picture of Emacs brain fuck notation](https://raw.githubusercontent.com/equwal/LispFuck/master/brain-fuck-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/brain-fuck-notation.png)
+[![Picture of Emacs brain fuck notation](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/brain-fuck-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/brain-fuck-notation.png)
 ```
 > #f.+[.+] <This is not inside the Brainfuck code, nor is + or -.>[]
 "�	
 
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 ```
-[![Picture of Emacs pound letter F notation](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pound-f-notation.png)
+[![Picture of Emacs pound letter F notation](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/pound-f-notation.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/pound-f-notation.png)
 
 Code can be saved in a file and run at the repl with the `(load "filepath")` command, and compiled with the `(compile-file "filepath")` command. [SBCL](http://www.sbcl.org/) will always compile your code for you. I recommend not compiling code unless speed is truly important; compiling can make the debugging capabilities of Common Lisp implementations less usable.
 
