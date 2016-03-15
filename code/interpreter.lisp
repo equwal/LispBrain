@@ -15,9 +15,11 @@
 ;;;; BRAINFUCK SOFTWARE.
 (in-package :brain)
 
+;;; All three of the following must be changed together for the desired effect
 (defparameter *max-byte* 255)
 (defparameter *min-byte* 0)
 (defparameter *byte-element-type* '(unsigned-byte 8))
+
 (defparameter *tape-size-default* 30000
   "The size of the tape, in bytes, used to store each byte")
 
@@ -46,18 +48,15 @@ comments or to break a right parentheses immediately to the right side")
 (defvar *brainfuck* ""
   "Place to store brainfuck code input string globally")
 
-;; Conditions for looping 
-(define-condition open-loop-at-zero (condition) ())
-(define-condition end-of-loop (condition) ())
-
 (defun pointer-default ()
   "Get the value to  set the pointer back to."
   (floor (/ *tape-size-default* 2)))
 
 (defvar *pointer* (pointer-default)
-  "The pointer location for the tape. Starts near the middle.")
+  "The pointer location for the tape. Starts at the middle.")
 
-(defvar *code-position* 0)
+(defvar *code-position* 0
+  "Holds the state of the pointer in the brainfuck ccode.")
 
 (defparameter *operators* '((open-loop . #\[)
 			    (close-loop . #\])
