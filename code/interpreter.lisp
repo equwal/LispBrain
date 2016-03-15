@@ -16,12 +16,26 @@
 (in-package :brain)
 
 ;;; All three of the following must be changed together for the desired effect
+
+(define-condition infinite-loop-detected (condition) ())
+
 (defparameter *max-byte* 255)
 (defparameter *min-byte* 0)
-(defparameter *byte-element-type* '(unsigned-byte 8))
+(defparameter *byte-element-type* '(unsigned-byte 8)
+  "Element type used in the tape array. By default an 8 bit unsigned byte is used.")
+
+(defparameter *infinite-looping-allowed* 'nil
+  "Turn on or off infinite looping")
+(defparameter *loop-limit* 9000
+  "Arbitrary limit to detect an infinite loop. May need to be adjusted for long-running programs")
+(defvar *current-loop* 0
+  "Holds the current number of loops executed. Once it reaches *loop-limit* it will halt the program, unless *infinite-looping-allowed* is T")
 
 (defparameter *tape-size-default* 30000
   "The size of the tape, in bytes, used to store each byte")
+
+(defvar *loop-depth* 0
+  "Used to provide an error for #f] and failures to open a loop")
 
 (defvar *output* ""
   "Defaults to an empty string because it is setf'd by other functions")
@@ -41,7 +55,6 @@ comments or to break a right parentheses immediately to the right side")
   (make-array *tape-size-default*
 	      :element-type *byte-element-type*
 	      :initial-element *initial-element*))
-
 (defvar *tape* (make-tape-array)
   "The tape array used to store each byte")
 
@@ -58,8 +71,8 @@ comments or to break a right parentheses immediately to the right side")
 (defvar *code-position* 0
   "Holds the state of the pointer in the brainfuck ccode.")
 
-(defparameter *operators* '((open-loop . #\[)
-			    (close-loop . #\])
+(defparameter *operators* '((open-loop . #\[) ;Can signal an error, will need to be handled for a userless experience.
+			    (close-loop . #\]) ;Also can signal an error
 			    (right-shift . #\>)
 			    (left-shift . #\<)
 			    (print-this-byte . #\.)
@@ -67,6 +80,15 @@ comments or to break a right parentheses immediately to the right side")
 			    (incf-byte . #\+)
 			    (decf-byte . #\-))
   "The operator's function name and it's character. Nothing is passed to the functions")
+
+(defun reset-globals ()
+  (setf *tape* (make-tape-array))
+  (setf *brainfuck* "")
+  (setf *pointer* (pointer-default))
+  (setf *output* "")
+  (setf *code-position* 0)
+  (setf *current-loop* 0)
+  (setf *loop-depth* 0))
 
 (defmacro byte-value ()
   `(aref *tape* *pointer*))
@@ -82,13 +104,18 @@ comments or to break a right parentheses immediately to the right side")
 (defun open-loop ()
   "Open a brainfuck loop with this function"
   ;; For non-zero the loop will be executed naturally until the ], but for a zero the position must be skipped
-    (if (= 0 (byte-value))
-	(setf *code-position*
-	      (1- (skip-loop *code-position*)))))
+  (cond ((and (not *infinite-looping-allowed*)
+	      (>= *current-loop* *loop-limit*))
+	 (error 'infinite-loop-detected))
+	((= 0 (byte-value)) (setf *code-position*
+				  (1- (skip-loop *code-position*))))
+	(t (progn (incf *current-loop*)
+		  (incf *loop-depth*)))))
 
 (defun close-loop ()
   (setf *code-position*
-	(1- (goto *code-position*)))) ;#f] bug is here
+	(1- (goto *code-position*)))
+  (decf *loop-depth*))
 
 (defun char->function (char)
   (car (rassoc char *operators*)))
@@ -104,13 +131,6 @@ comments or to break a right parentheses immediately to the right side")
   (let ((function (char->function (this-code-character)))) 
     (if function
 	(funcall function))))
-
-(defun reset-globals ()
-  (setf *tape* (make-tape-array))
-  (setf *brainfuck* "")
-  (setf *pointer* (pointer-default))
-  (setf *output* "")
-  (setf *code-position* 0))
 
 (defun shorthand-fuck-aux (stream list)
   "Recursive reader macro. A compiler from within Lisp!"
