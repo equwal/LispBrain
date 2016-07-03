@@ -110,8 +110,8 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
 ""
 ```
 
-#Bugs/TODO:
-- Include instructions for users on Windows.
+#Brain
+- A recently deceased human brain being handled: https://www.youtube.com/watch?v=jHxyP-nUhUY
 
 #Conclusion
 All of the colorful pictures of code being executed were taken using Emacs and Slime, and edited with GIMP.
