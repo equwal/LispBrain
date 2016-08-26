@@ -1,4 +1,4 @@
-# Brainfuck from withing Common Lisp
+# Brainfuck from within Common Lisp
 LispFuck is a simple Brainfuck interpreter written in Common Lisp. It has the best brainfuck debugging capabilities currently in existence, and code can be interpreted or compiled. Users may: view the tape contents or individual cell contents, find the final position of execution in the tape, change the length of the byte tape in the REPL, and more.
 [![Picture of Emacs REPL](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/repl.png)](https://raw.githubusercontent.com/equwal/LispFuck/master/pics/repl.png)
 
