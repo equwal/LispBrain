@@ -23,14 +23,14 @@ These can be combined into a string such as the following "Hello World!" program
 "Hello World!
 "
 ```
-#How to install:
+# How to install:
 - Make sure you have a Common Lisp implementation installed. I recommend [Steel Bank Common Lisp](http://www.sbcl.org/).
 - [ASDF](https://common-lisp.net/project/asdf/) must be installed. Many Lisps come with it, no installation necessary (including [SBCL](http://www.sbcl.org/)).
 - Install this code into your ASDF *load directory*. The default on linux is usually `~/common-lisp/`:
 ```
 me@linux:~$ mkdir common-lisp
 me@linux:~$ cd common-lisp
-me@linux:~/common-lisp$ git clone https://github.com/equwal/LispFuck.git
+me@linux:~/common-lisp$ git clone https://github.com/equwal/LispBrain.git
 ```
 - Run your favourite Common Lisp implementation and load the :brain package:
 ```
@@ -46,7 +46,7 @@ If you are unable to find where the ASDF load directory is, you may choose to lo
 ```
 
 In Allegro common lisp one must first use `(require :asdf)` before executing any other commands in order to activate the preinstalled ASDF system.
-#How to Use:
+# How to Use:
 If everything runs smoothly you will be ready to Brainfuck. If there are issues then please *let it be known*. Now one must chooses between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespaces or closing parenthesis in the Brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"`, or an unescaped literal backward slash `\` inside of the Brainfuck code. Below they are both shown:
 ```
 > (brain:fuck ".+[.+] Please escape your \" and \\ characters!")
@@ -86,7 +86,7 @@ brain:*pointer*           ;Stores the current position in the byte tape. Useful 
 ```
 Note that the variables `*tape*` and `*pointer*` are reset upon executing new Brainfuck code. Once the execution is finished their state is frozen in time and ready to be viewed.
 
-#Examples for Debugging:
+# Examples for Debugging:
 Suppose you want to make the tape only 10 bytes long (instead of the default 30000) This way you can easily view the tape contents after execution:
 ```
 > (setf brain:*tape-size-default* 10) ;Sets the tape to only elements 0 to 9
@@ -110,10 +110,10 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
 ""
 ```
 
-#Brain
-- A recently deceased human brain being handled: https://www.youtube.com/watch?v=jHxyP-nUhUY
+# Brain
+- A recently deceased human brain being handled for your pleasure: https://www.youtube.com/watch?v=jHxyP-nUhUY
 
-#Conclusion
+# Conclusion
 All of the colorful pictures of code being executed were taken using Emacs and Slime, and edited with GIMP.
 
 Please sumbit any feedback to me via email.
