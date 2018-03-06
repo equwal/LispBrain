@@ -49,6 +49,7 @@ In Allegro common lisp one must first use `(require :asdf)` before executing any
 # How to Use:
 If everything runs smoothly you will be ready to Brainfuck. If there are issues then please *let it be known*. Now one must choose between the `brain:fuck` and the `#F` notation when using the REPL. The `#F` notation is more concise but does not allow any whitespaces or closing parenthesis in the Brainfuck code, while the `brain:fuck` notation allows any character except for an unescaped literal quote `"`, or an unescaped literal backward slash `\` inside of the Brainfuck code. Below they are both shown:
 ```
+Note: This program prints out an ASCII table using a loop.
 > (brain:fuck ".+[.+] Please escape your \" and \\ characters!")
 "�	
 
