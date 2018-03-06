@@ -112,7 +112,7 @@ Suppose you want to find information about the execution of `incf-byte` and `dec
 ```
 
 # Brain
-- A recently deceased human brain being handled for your pleasure: https://www.youtube.com/watch?v=jHxyP-nUhUY
+- A recently deceased human brain being handled. It jiggles like jello: https://www.youtube.com/watch?v=jHxyP-nUhUY
 
 # Conclusion
 All of the colorful pictures of code being executed were taken using Emacs and Slime, and edited with GIMP.
