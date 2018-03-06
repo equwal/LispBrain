@@ -65,7 +65,7 @@ If everything runs smoothly you will be ready to Brainfuck. If there are issues 
 
 Code can be saved in a file and run at the repl with the `(load "filepath")` command, and compiled with the `(compile-file "filepath")` command. [SBCL](http://www.sbcl.org/) will always compile your code for you. I recommend not compiling code unless speed is truly important; compiling can make the debugging capabilities of Common Lisp implementations less usable.
 
-#Debugging Brainfuck
+# Debugging Brainfuck
 
 Debugging Brainfuck code can be done using all the normal Common Lisp functions: `step`, `trace`, `time`, etc. The following functions and variables are exported to the user and may be useful for debugging Brainfuck code:
 ```
