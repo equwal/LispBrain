@@ -1,6 +1,3 @@
-interpreter.fasl
-interpreter.fasl~
-packages.fasl
-packages.fasl~
-.gitignore~
-utils.lisp~
+*.*~
+.fasl
+*.fasl
